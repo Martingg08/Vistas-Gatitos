@@ -34,6 +34,589 @@ public class VistaVoluntario extends javax.swing.JPanel {
         initComponents();
     }
     
+    // Agregar estos métodos a la clase VistaVoluntario
+
+private void mostrarFormularioRegistrarVisita() {
+    JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
+    panelPrincipal.setBackground(new Color(102, 102, 102));
+    panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+    
+    // Título
+    JLabel labelTitulo = new JLabel("Registrar Visita de Seguimiento");
+    labelTitulo.setFont(new Font("Aptos", Font.BOLD, 32));
+    labelTitulo.setForeground(Color.WHITE);
+    labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+    panelPrincipal.add(labelTitulo, BorderLayout.NORTH);
+    
+    // Panel con la lista de gatos
+    JPanel panelSeleccion = crearPanelSeleccionGato();
+    panelPrincipal.add(panelSeleccion, BorderLayout.CENTER);
+    
+    // Mostrar en el contenedor principal
+    ContenedorPrincipalVoluntario.removeAll();
+    ContenedorPrincipalVoluntario.setLayout(new BorderLayout());
+    
+    JScrollPane scrollPane = new JScrollPane(panelPrincipal);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+    scrollPane.setBorder(null);
+    
+    ContenedorPrincipalVoluntario.add(scrollPane, BorderLayout.CENTER);
+    ContenedorPrincipalVoluntario.revalidate();
+    ContenedorPrincipalVoluntario.repaint();
+}
+
+private JPanel crearPanelSeleccionGato() {
+    JPanel panel = new JPanel(new BorderLayout(10, 10));
+    panel.setBackground(new Color(102, 102, 102));
+    
+    // Instrucciones
+    JLabel labelInstrucciones = new JLabel("<html><center>Seleccione un gato de la lista para registrar una visita de seguimiento.<br>" +
+                                          "Solo se muestran gatos actualmente asignados a familias.</center></html>");
+    labelInstrucciones.setFont(new Font("Aptos", Font.PLAIN, 16));
+    labelInstrucciones.setForeground(Color.WHITE);
+    labelInstrucciones.setHorizontalAlignment(SwingConstants.CENTER);
+    labelInstrucciones.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+    panel.add(labelInstrucciones, BorderLayout.NORTH);
+    
+    // TODO: Obtener lista real de la base de datos
+    List<GatoAsignadoInfo> gatosAsignados = obtenerGatosAsignados();
+    
+    if (gatosAsignados.isEmpty()) {
+        JLabel labelSinGatos = new JLabel("No hay gatos asignados a familias actualmente");
+        labelSinGatos.setFont(new Font("Aptos", Font.BOLD, 18));
+        labelSinGatos.setForeground(Color.YELLOW);
+        labelSinGatos.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(labelSinGatos, BorderLayout.CENTER);
+        return panel;
+    }
+    
+    // Panel con la tabla de gatos
+    JPanel panelTabla = new JPanel(new BorderLayout());
+    panelTabla.setBackground(new Color(102, 102, 102));
+    
+    // Crear tabla
+    String[] columnas = {"ID", "Nombre Gato", "Familia", "Tipo Asignación", "Fecha Asignación"};
+    Object[][] datos = new Object[gatosAsignados.size()][5];
+    
+    for (int i = 0; i < gatosAsignados.size(); i++) {
+        GatoAsignadoInfo gato = gatosAsignados.get(i);
+        datos[i][0] = gato.idGato;
+        datos[i][1] = gato.nombreGato;
+        datos[i][2] = gato.nombreFamilia;
+        datos[i][3] = gato.tipoAsignacion;
+        datos[i][4] = gato.fechaAsignacion;
+    }
+    
+    JTable tabla = new JTable(datos, columnas);
+    tabla.setFont(new Font("Aptos", Font.PLAIN, 14));
+    tabla.setRowHeight(30);
+    tabla.getTableHeader().setFont(new Font("Aptos", Font.BOLD, 14));
+    tabla.getTableHeader().setBackground(new Color(0, 102, 153));
+    tabla.getTableHeader().setForeground(Color.WHITE);
+    tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    tabla.setBackground(new Color(204, 204, 204));
+    
+    JScrollPane scrollTabla = new JScrollPane(tabla);
+    panelTabla.add(scrollTabla, BorderLayout.CENTER);
+    
+    panel.add(panelTabla, BorderLayout.CENTER);
+    
+    // Panel con selector de ID y botón
+    JPanel panelSelector = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+    panelSelector.setBackground(new Color(102, 102, 102));
+    panelSelector.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
+    
+    JLabel labelId = new JLabel("ID del Gato:");
+    labelId.setFont(new Font("Aptos", Font.PLAIN, 18));
+    labelId.setForeground(Color.WHITE);
+    panelSelector.add(labelId);
+    
+    JTextField textFieldId = new JTextField(10);
+    textFieldId.setFont(new Font("Aptos", Font.PLAIN, 16));
+    textFieldId.setBackground(new Color(204, 204, 204));
+    textFieldId.setPreferredSize(new Dimension(150, 35));
+    panelSelector.add(textFieldId);
+    
+    JButton botonContinuar = new JButton("Continuar");
+    botonContinuar.setFont(new Font("Aptos", Font.BOLD, 16));
+    botonContinuar.setBackground(new Color(0, 102, 153));
+    botonContinuar.setForeground(Color.WHITE);
+    botonContinuar.setBorderPainted(false);
+    botonContinuar.setPreferredSize(new Dimension(150, 40));
+    botonContinuar.addActionListener(e -> {
+        String idTexto = textFieldId.getText().trim();
+        if (idTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(panel,
+                "Debe ingresar el ID del gato",
+                "Error de validación",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        Integer idGato;
+        try {
+            idGato = Integer.parseInt(idTexto);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(panel,
+                "El ID debe ser un número válido",
+                "Error de validación",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Buscar el gato en la lista
+        GatoAsignadoInfo gatoSeleccionado = null;
+        for (GatoAsignadoInfo gato : gatosAsignados) {
+            if (gato.idGato.equals(idGato)) {
+                gatoSeleccionado = gato;
+                break;
+            }
+        }
+        
+        if (gatoSeleccionado == null) {
+            JOptionPane.showMessageDialog(panel,
+                "El gato con ID " + idGato + " no está asignado a ninguna familia.\n" +
+                "No es posible registrar una visita.",
+                "Gato sin asignación vigente",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Continuar con el formulario de visita
+        mostrarFormularioDetallesVisita(gatoSeleccionado);
+    });
+    panelSelector.add(botonContinuar);
+    
+    // Listener para selección en la tabla
+    tabla.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+            int filaSeleccionada = tabla.getSelectedRow();
+            if (filaSeleccionada >= 0) {
+                Object idObj = tabla.getValueAt(filaSeleccionada, 0);
+                textFieldId.setText(idObj.toString());
+            }
+        }
+    });
+    
+    panel.add(panelSelector, BorderLayout.SOUTH);
+    
+    return panel;
+}
+
+private void mostrarFormularioDetallesVisita(GatoAsignadoInfo gato) {
+    JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
+    panelPrincipal.setBackground(new Color(102, 102, 102));
+    panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+    
+    // Título
+    JLabel labelTitulo = new JLabel("Registrar Visita de Seguimiento");
+    labelTitulo.setFont(new Font("Aptos", Font.BOLD, 32));
+    labelTitulo.setForeground(Color.WHITE);
+    labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+    panelPrincipal.add(labelTitulo, BorderLayout.NORTH);
+    
+    // Panel central con información y formulario
+    JPanel panelCentral = new JPanel(new BorderLayout(10, 10));
+    panelCentral.setBackground(new Color(102, 102, 102));
+    
+    // Panel de información del gato y familia
+    JPanel panelInfo = crearPanelInformacionGatoFamilia(gato);
+    panelCentral.add(panelInfo, BorderLayout.NORTH);
+    
+    // Panel del formulario
+    JPanel panelFormulario = crearFormularioVisita(gato);
+    panelCentral.add(panelFormulario, BorderLayout.CENTER);
+    
+    panelPrincipal.add(panelCentral, BorderLayout.CENTER);
+    
+    // Mostrar en el contenedor principal
+    ContenedorPrincipalVoluntario.removeAll();
+    ContenedorPrincipalVoluntario.setLayout(new BorderLayout());
+    
+    JScrollPane scrollPane = new JScrollPane(panelPrincipal);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+    scrollPane.setBorder(null);
+    
+    ContenedorPrincipalVoluntario.add(scrollPane, BorderLayout.CENTER);
+    ContenedorPrincipalVoluntario.revalidate();
+    ContenedorPrincipalVoluntario.repaint();
+}
+
+private JPanel crearPanelInformacionGatoFamilia(GatoAsignadoInfo gato) {
+    JPanel panel = new JPanel(new GridLayout(2, 1, 10, 10));
+    panel.setBackground(new Color(102, 102, 102));
+    panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+    
+    // Información del gato
+    JPanel panelGato = new JPanel(new GridBagLayout());
+    panelGato.setBackground(new Color(80, 80, 80));
+    panelGato.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(new Color(255, 200, 100), 2),
+        BorderFactory.createEmptyBorder(15, 15, 15, 15)
+    ));
+    
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.anchor = GridBagConstraints.WEST;
+    gbc.insets = new Insets(5, 10, 5, 10);
+    
+    JLabel labelTituloGato = new JLabel("▸ GATO SELECCIONADO");
+    labelTituloGato.setFont(new Font("Aptos", Font.BOLD, 18));
+    labelTituloGato.setForeground(new Color(255, 200, 100));
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.gridwidth = 2;
+    panelGato.add(labelTituloGato, gbc);
+    
+    gbc.gridwidth = 1;
+    gbc.gridy = 1;
+    agregarInfoLabel(panelGato, gbc, "ID:", String.valueOf(gato.idGato));
+    gbc.gridy = 2;
+    agregarInfoLabel(panelGato, gbc, "Nombre:", gato.nombreGato);
+    gbc.gridy = 3;
+    agregarInfoLabel(panelGato, gbc, "Tipo de asignación:", gato.tipoAsignacion);
+    gbc.gridy = 4;
+    agregarInfoLabel(panelGato, gbc, "Fecha de asignación:", gato.fechaAsignacion.toString());
+    
+    panel.add(panelGato);
+    
+    // Información de la familia
+    JPanel panelFamilia = new JPanel(new GridBagLayout());
+    panelFamilia.setBackground(new Color(80, 80, 80));
+    panelFamilia.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(new Color(144, 238, 144), 2),
+        BorderFactory.createEmptyBorder(15, 15, 15, 15)
+    ));
+    
+    gbc = new GridBagConstraints();
+    gbc.anchor = GridBagConstraints.WEST;
+    gbc.insets = new Insets(5, 10, 5, 10);
+    
+    JLabel labelTituloFamilia = new JLabel("▸ FAMILIA ASIGNADA");
+    labelTituloFamilia.setFont(new Font("Aptos", Font.BOLD, 18));
+    labelTituloFamilia.setForeground(new Color(144, 238, 144));
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.gridwidth = 2;
+    panelFamilia.add(labelTituloFamilia, gbc);
+    
+    gbc.gridwidth = 1;
+    gbc.gridy = 1;
+    agregarInfoLabel(panelFamilia, gbc, "Nombre:", gato.nombreFamilia);
+    gbc.gridy = 2;
+    agregarInfoLabel(panelFamilia, gbc, "Dirección:", gato.direccionFamilia);
+    gbc.gridy = 3;
+    agregarInfoLabel(panelFamilia, gbc, "Teléfono:", gato.telefonoFamilia);
+    gbc.gridy = 4;
+    agregarInfoLabel(panelFamilia, gbc, "Reputación:", gato.reputacionFamilia);
+    
+    if (gato.fechaUltimaVisita != null) {
+        gbc.gridy = 5;
+        JLabel labelUltima = new JLabel("Última visita:");
+        labelUltima.setFont(new Font("Aptos", Font.BOLD, 14));
+        labelUltima.setForeground(Color.YELLOW);
+        gbc.gridx = 0;
+        panelFamilia.add(labelUltima, gbc);
+        
+        JLabel labelFechaUltima = new JLabel(gato.fechaUltimaVisita.toString());
+        labelFechaUltima.setFont(new Font("Aptos", Font.PLAIN, 14));
+        labelFechaUltima.setForeground(Color.YELLOW);
+        gbc.gridx = 1;
+        panelFamilia.add(labelFechaUltima, gbc);
+    } else {
+        gbc.gridy = 5;
+        JLabel labelSinVisitas = new JLabel("Sin visitas previas registradas");
+        labelSinVisitas.setFont(new Font("Aptos", Font.ITALIC, 14));
+        labelSinVisitas.setForeground(Color.LIGHT_GRAY);
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        panelFamilia.add(labelSinVisitas, gbc);
+    }
+    
+    panel.add(panelFamilia);
+    
+    return panel;
+}
+
+private void agregarInfoLabel(JPanel panel, GridBagConstraints gbc, String etiqueta, String valor) {
+    JLabel labelEtiqueta = new JLabel(etiqueta);
+    labelEtiqueta.setFont(new Font("Aptos", Font.BOLD, 14));
+    labelEtiqueta.setForeground(Color.WHITE);
+    gbc.gridx = 0;
+    panel.add(labelEtiqueta, gbc);
+    
+    JLabel labelValor = new JLabel(valor);
+    labelValor.setFont(new Font("Aptos", Font.PLAIN, 14));
+    labelValor.setForeground(new Color(220, 220, 220));
+    gbc.gridx = 1;
+    panel.add(labelValor, gbc);
+}
+
+private JPanel crearFormularioVisita(GatoAsignadoInfo gato) {
+    JPanel panel = new JPanel(new GridBagLayout());
+    panel.setBackground(new Color(102, 102, 102));
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(12, 20, 12, 20);
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    
+    int fila = 0;
+    
+    // Fecha de la visita
+    JLabel labelFecha = new JLabel("Fecha de la Visita: *");
+    labelFecha.setFont(new Font("Aptos", Font.PLAIN, 18));
+    labelFecha.setForeground(Color.WHITE);
+    gbc.gridx = 0;
+    gbc.gridy = fila;
+    gbc.weightx = 0.3;
+    panel.add(labelFecha, gbc);
+    
+    JPanel panelFecha = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+    panelFecha.setBackground(new Color(102, 102, 102));
+    
+    JComboBox<Integer> comboDia = new JComboBox<>();
+    for (int i = 1; i <= 31; i++) {
+        comboDia.addItem(i);
+    }
+    comboDia.setFont(new Font("Aptos", Font.PLAIN, 16));
+    comboDia.setBackground(new Color(204, 204, 204));
+    comboDia.setPreferredSize(new Dimension(70, 35));
+    
+    JComboBox<String> comboMes = new JComboBox<>(new String[]{
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    });
+    comboMes.setFont(new Font("Aptos", Font.PLAIN, 16));
+    comboMes.setBackground(new Color(204, 204, 204));
+    comboMes.setPreferredSize(new Dimension(130, 35));
+    
+    JComboBox<Integer> comboAnio = new JComboBox<>();
+    int anioActual = LocalDate.now().getYear();
+    for (int i = anioActual - 1; i <= anioActual + 1; i++) {
+        comboAnio.addItem(i);
+    }
+    comboAnio.setSelectedItem(anioActual);
+    comboAnio.setFont(new Font("Aptos", Font.PLAIN, 16));
+    comboAnio.setBackground(new Color(204, 204, 204));
+    comboAnio.setPreferredSize(new Dimension(90, 35));
+    
+    // Establecer fecha actual
+    LocalDate hoy = LocalDate.now();
+    comboDia.setSelectedItem(hoy.getDayOfMonth());
+    comboMes.setSelectedIndex(hoy.getMonthValue() - 1);
+    
+    panelFecha.add(comboDia);
+    panelFecha.add(comboMes);
+    panelFecha.add(comboAnio);
+    
+    gbc.gridx = 1;
+    gbc.gridy = fila++;
+    gbc.weightx = 0.7;
+    panel.add(panelFecha, gbc);
+    
+    // Estado general del gato
+    JLabel labelEstado = new JLabel("Estado General del Gato: *");
+    labelEstado.setFont(new Font("Aptos", Font.PLAIN, 18));
+    labelEstado.setForeground(Color.WHITE);
+    gbc.gridx = 0;
+    gbc.gridy = fila;
+    gbc.weightx = 0.3;
+    panel.add(labelEstado, gbc);
+    
+    JComboBox<String> comboEstado = new JComboBox<>(new String[]{
+        "Excelente", "Bueno", "Regular", "Malo", "Crítico"
+    });
+    comboEstado.setFont(new Font("Aptos", Font.PLAIN, 16));
+    comboEstado.setBackground(new Color(204, 204, 204));
+    comboEstado.setPreferredSize(new Dimension(300, 35));
+    gbc.gridx = 1;
+    gbc.gridy = fila++;
+    gbc.weightx = 0.7;
+    panel.add(comboEstado, gbc);
+    
+    // Observaciones sobre el entorno y trato
+    JLabel labelObservaciones = new JLabel("Observaciones (Entorno y Trato): *");
+    labelObservaciones.setFont(new Font("Aptos", Font.PLAIN, 18));
+    labelObservaciones.setForeground(Color.WHITE);
+    gbc.gridx = 0;
+    gbc.gridy = fila;
+    gbc.weightx = 0.3;
+    gbc.anchor = GridBagConstraints.NORTH;
+    panel.add(labelObservaciones, gbc);
+    
+    JTextArea textAreaObservaciones = new JTextArea(5, 30);
+    textAreaObservaciones.setFont(new Font("Aptos", Font.PLAIN, 16));
+    textAreaObservaciones.setBackground(new Color(204, 204, 204));
+    textAreaObservaciones.setForeground(Color.BLACK);
+    textAreaObservaciones.setLineWrap(true);
+    textAreaObservaciones.setWrapStyleWord(true);
+    JScrollPane scrollObservaciones = new JScrollPane(textAreaObservaciones);
+    scrollObservaciones.setPreferredSize(new Dimension(400, 120));
+    gbc.gridx = 1;
+    gbc.gridy = fila++;
+    gbc.weightx = 0.7;
+    gbc.anchor = GridBagConstraints.CENTER;
+    panel.add(scrollObservaciones, gbc);
+    
+    // Sugerencias (opcional)
+    JLabel labelSugerencias = new JLabel("Sugerencias (Opcional):");
+    labelSugerencias.setFont(new Font("Aptos", Font.PLAIN, 18));
+    labelSugerencias.setForeground(Color.WHITE);
+    gbc.gridx = 0;
+    gbc.gridy = fila;
+    gbc.weightx = 0.3;
+    gbc.anchor = GridBagConstraints.NORTH;
+    panel.add(labelSugerencias, gbc);
+    
+    JTextArea textAreaSugerencias = new JTextArea(4, 30);
+    textAreaSugerencias.setFont(new Font("Aptos", Font.PLAIN, 16));
+    textAreaSugerencias.setBackground(new Color(204, 204, 204));
+    textAreaSugerencias.setForeground(Color.BLACK);
+    textAreaSugerencias.setLineWrap(true);
+    textAreaSugerencias.setWrapStyleWord(true);
+    JScrollPane scrollSugerencias = new JScrollPane(textAreaSugerencias);
+    scrollSugerencias.setPreferredSize(new Dimension(400, 100));
+    gbc.gridx = 1;
+    gbc.gridy = fila++;
+    gbc.weightx = 0.7;
+    gbc.anchor = GridBagConstraints.CENTER;
+    panel.add(scrollSugerencias, gbc);
+    
+    // Panel de botones
+    JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
+    panelBotones.setBackground(new Color(102, 102, 102));
+    
+    JButton botonCancelar = new JButton("Cancelar");
+    botonCancelar.setFont(new Font("Aptos", Font.PLAIN, 18));
+    botonCancelar.setBackground(new Color(0, 102, 153));
+    botonCancelar.setForeground(Color.WHITE);
+    botonCancelar.setBorderPainted(false);
+    botonCancelar.setPreferredSize(new Dimension(150, 45));
+    botonCancelar.addActionListener(e -> {
+        int confirmacion = JOptionPane.showConfirmDialog(panel,
+            "¿Está seguro que desea cancelar? Se perderán los datos ingresados.",
+            "Confirmar cancelación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE);
+        
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            mostrarFormularioRegistrarVisita();
+        }
+    });
+    panelBotones.add(botonCancelar);
+    
+    JButton botonRegistrar = new JButton("Registrar Visita");
+    botonRegistrar.setFont(new Font("Aptos", Font.BOLD, 18));
+    botonRegistrar.setBackground(new Color(0, 150, 0));
+    botonRegistrar.setForeground(Color.WHITE);
+    botonRegistrar.setBorderPainted(false);
+    botonRegistrar.setPreferredSize(new Dimension(180, 45));
+    botonRegistrar.addActionListener(e -> {
+        // Validar campos obligatorios
+        if (textAreaObservaciones.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(panel,
+                "El campo 'Observaciones sobre el entorno y trato' es obligatorio.",
+                "Falta de datos obligatorios",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Obtener fecha
+        LocalDate fechaVisita = LocalDate.of(
+            (Integer) comboAnio.getSelectedItem(),
+            comboMes.getSelectedIndex() + 1,
+            (Integer) comboDia.getSelectedItem()
+        );
+        
+        String estadoGeneral = (String) comboEstado.getSelectedItem();
+        String observaciones = textAreaObservaciones.getText().trim();
+        String sugerencias = textAreaSugerencias.getText().trim();
+        
+        // TODO: Guardar en la base de datos
+        
+        JOptionPane.showMessageDialog(panel,
+            "¡Visita registrada exitosamente!\n\n" +
+            "Gato: " + gato.nombreGato + "\n" +
+            "Familia: " + gato.nombreFamilia + "\n" +
+            "Fecha: " + fechaVisita + "\n" +
+            "Estado: " + estadoGeneral + "\n\n" +
+            "(Funcionalidad de guardado pendiente de implementación)",
+            "Visita registrada",
+            JOptionPane.INFORMATION_MESSAGE);
+        
+        // Volver al formulario inicial
+        mostrarFormularioRegistrarVisita();
+    });
+    panelBotones.add(botonRegistrar);
+    
+    gbc.gridx = 0;
+    gbc.gridy = fila;
+    gbc.gridwidth = 2;
+    gbc.insets = new Insets(30, 20, 20, 20);
+    gbc.anchor = GridBagConstraints.CENTER;
+    panel.add(panelBotones, gbc);
+    
+    return panel;
+}
+
+// TODO: Reemplazar con consulta real a la base de datos
+private List<GatoAsignadoInfo> obtenerGatosAsignados() {
+    List<GatoAsignadoInfo> lista = new ArrayList<>();
+    
+    // Datos simulados para pruebas
+    lista.add(new GatoAsignadoInfo(
+        1, "Michi", 1, "Familia González", "Calle Principal 123",
+        "123-456-7890", "Buena", "Adopción Definitiva",
+        LocalDate.of(2025, 10, 15), LocalDate.of(2025, 11, 1)
+    ));
+    
+    lista.add(new GatoAsignadoInfo(
+        2, "Pelusa", 2, "Familia Martínez", "Av. Libertador 456",
+        "098-765-4321", "Excelente", "Tránsito",
+        LocalDate.of(2025, 11, 5), null
+    ));
+    
+    lista.add(new GatoAsignadoInfo(
+        3, "Garfield", 1, "Familia González", "Calle Principal 123",
+        "123-456-7890", "Buena", "Tránsito",
+        LocalDate.of(2025, 11, 10), null
+    ));
+    
+    return lista;
+}
+
+// Clase auxiliar para información de gatos asignados
+private static class GatoAsignadoInfo {
+    Integer idGato;
+    String nombreGato;
+    Integer idFamilia;
+    String nombreFamilia;
+    String direccionFamilia;
+    String telefonoFamilia;
+    String reputacionFamilia;
+    String tipoAsignacion;
+    LocalDate fechaAsignacion;
+    LocalDate fechaUltimaVisita;
+    
+    GatoAsignadoInfo(Integer idGato, String nombreGato, Integer idFamilia,
+                    String nombreFamilia, String direccionFamilia, String telefonoFamilia,
+                    String reputacionFamilia, String tipoAsignacion,
+                    LocalDate fechaAsignacion, LocalDate fechaUltimaVisita) {
+        this.idGato = idGato;
+        this.nombreGato = nombreGato;
+        this.idFamilia = idFamilia;
+        this.nombreFamilia = nombreFamilia;
+        this.direccionFamilia = direccionFamilia;
+        this.telefonoFamilia = telefonoFamilia;
+        this.reputacionFamilia = reputacionFamilia;
+        this.tipoAsignacion = tipoAsignacion;
+        this.fechaAsignacion = fechaAsignacion;
+        this.fechaUltimaVisita = fechaUltimaVisita;
+    }
+}
+    
     // Método para crear y mostrar el calendario de tareas
     private void mostrarCalendarioDeTareas() {
         // Panel principal del calendario
@@ -878,6 +1461,16 @@ public class VistaVoluntario extends javax.swing.JPanel {
         BotonRegistrarVisitaDeSeguimiento.setForeground(new java.awt.Color(255, 255, 255));
         BotonRegistrarVisitaDeSeguimiento.setText("<HTML>Registrar visita de seguimiento</HTML>");
         BotonRegistrarVisitaDeSeguimiento.setBorderPainted(false);
+        
+        BotonRegistrarVisitaDeSeguimiento.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        BotonRegistrarVisitaDeSeguimientoActionPerformed(evt);
+    }
+    private void BotonRegistrarVisitaDeSeguimientoActionPerformed(java.awt.event.ActionEvent evt) {                                                                  
+    mostrarFormularioRegistrarVisita();
+}
+});
+        
 
         BotonVerCalendarioDeTareas.setBackground(new java.awt.Color(0, 102, 153));
         BotonVerCalendarioDeTareas.setFont(new java.awt.Font("Aptos", 0, 18)); // NOI18N
