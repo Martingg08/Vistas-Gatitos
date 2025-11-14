@@ -11,6 +11,16 @@ public class Main extends javax.swing.JFrame {
     private VistaAdministrador vistaAdministrador;
     private VistaVeterinario vistaVeterinario;
     private VistaVoluntario vistaVoluntario;
+        private RegistrarUsuarioNuevo registrarUsuarioNuevo;
+
+    public void setRegistrarUsuarioNuevo() {
+        if (registrarUsuarioNuevo == null) {
+            registrarUsuarioNuevo = new RegistrarUsuarioNuevo(this);
+        }
+        ContenedorMain.removeAll();
+        ContenedorMain.add(registrarUsuarioNuevo);
+        SwingUtilities.updateComponentTreeUI(ContenedorMain);
+    }
     
     public void setInicioSesion() {
         if (inicioSesion == null) {

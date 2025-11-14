@@ -162,6 +162,9 @@
         <Property name="text" type="java.lang.String" value="Registrar nuevo usuario"/>
         <Property name="borderPainted" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonRegistrarNuevoUsuarioInicioSesionActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonIniciarSesi&#xf3;nInicioSesion">
       <Properties>

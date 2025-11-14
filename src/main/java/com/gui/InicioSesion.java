@@ -15,6 +15,11 @@ public class InicioSesion extends javax.swing.JPanel {
     public InicioSesion(Main mainFrame) {
         this.mainFrame = mainFrame;
         initComponents();
+        ButtonRegistrarNuevoUsuarioInicioSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRegistrarNuevoUsuarioInicioSesionActionPerformed(evt);
+            }
+        });
     }
 
     /**
@@ -80,6 +85,11 @@ public class InicioSesion extends javax.swing.JPanel {
         ButtonRegistrarNuevoUsuarioInicioSesion.setForeground(new java.awt.Color(255, 255, 255));
         ButtonRegistrarNuevoUsuarioInicioSesion.setText("Registrar nuevo usuario");
         ButtonRegistrarNuevoUsuarioInicioSesion.setBorderPainted(false);
+        ButtonRegistrarNuevoUsuarioInicioSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRegistrarNuevoUsuarioInicioSesionActionPerformed(evt);
+            }
+        });
 
         ButtonIniciarSesiónInicioSesion.setBackground(new java.awt.Color(0, 102, 153));
         ButtonIniciarSesiónInicioSesion.setFont(new java.awt.Font("Aptos", 0, 14)); // NOI18N
@@ -149,6 +159,10 @@ public class InicioSesion extends javax.swing.JPanel {
         mainFrame.setVistaVoluntario();
     }//GEN-LAST:event_ButtonIniciarSesiónInicioSesionActionPerformed
 
+    private void ButtonRegistrarNuevoUsuarioInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRegistrarNuevoUsuarioInicioSesionActionPerformed
+        // TODO add your handling code here:
+        mainFrame.setRegistrarUsuarioNuevo();
+    }//GEN-LAST:event_ButtonRegistrarNuevoUsuarioInicioSesionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonIniciarSesiónInicioSesion;
