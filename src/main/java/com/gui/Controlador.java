@@ -579,243 +579,648 @@ public class Controlador {
         }
     }
     
-    // ==================== MÓDULO: VETERINARIO - DIAGNÓSTICO Y TRATAMIENTO ====================
+        // ==================== MÓDULO: VETERINARIO - DIAGNÓSTICO Y TRATAMIENTO ====================
 
-/**
- * Obtiene información completa de un gato incluyendo historial médico
- * 
- * @return Ficha clínica del gato, o null si no existe
- */
-public FichaClinicaGato obtenerFichaClinica(Integer idGato) {
-    // TODO: BASE DE DATOS - Consultar gato con historial médico
-    // try {
-    //     String sql = "SELECT g.id, g.nombre, g.color, g.estado_salud, g.caracteristicas, " +
-    //                  "       g.edad_aproximada, f.nombre as familia, f.direccion " +
-    //                  "FROM Gatos g " +
-    //                  "LEFT JOIN Asignaciones a ON g.id = a.id_gato AND a.activa = true " +
-    //                  "LEFT JOIN Familias f ON a.id_familia = f.id " +
-    //                  "WHERE g.id = ?";
-    //     PreparedStatement stmt = conexion.prepareStatement(sql);
-    //     stmt.setInt(1, idGato);
-    //     ResultSet rs = stmt.executeQuery();
-    //     
-    //     if (rs.next()) {
-    //         FichaClinicaGato ficha = new FichaClinicaGato(
-    //             rs.getInt("id"),
-    //             rs.getString("nombre"),
-    //             rs.getString("color"),
-    //             (Integer) rs.getObject("edad_aproximada"),
-    //             rs.getString("estado_salud"),
-    //             rs.getString("caracteristicas"),
-    //             rs.getString("familia"),
-    //             rs.getString("direccion")
-    //         );
-    //         
-    //         // Obtener historial médico
-    //         ficha.historialMedico = obtenerHistorialMedico(idGato);
-    //         
-    //         return ficha;
-    //     }
-    // } catch (SQLException e) {
-    //     e.printStackTrace();
-    // }
-    // return null;
-    
-    // DATOS SIMULADOS - Eliminar cuando se implemente BD
-    if (idGato == 1) {
-        FichaClinicaGato ficha = new FichaClinicaGato(
-            1, "Michi", "Naranja", 12, "Sano", 
-            "Gato tranquilo, muy sociable",
-            "Familia González", "Calle Principal 123"
-        );
-        ficha.historialMedico = obtenerHistorialMedico(idGato);
-        return ficha;
-    } else if (idGato == 2) {
-        FichaClinicaGato ficha = new FichaClinicaGato(
-            2, "Pelusa", "Blanco", 8, "En tratamiento",
-            "Recuperándose de cirugía",
-            "Familia Martínez", "Av. Libertador 456"
-        );
-        ficha.historialMedico = obtenerHistorialMedico(idGato);
-        return ficha;
-    } else if (idGato == 3) {
-        FichaClinicaGato ficha = new FichaClinicaGato(
-            3, "Garfield", "Atigrado", 24, "Enfermo",
-            "Problemas digestivos",
-            "En colonia", "Sin asignación"
-        );
-        ficha.historialMedico = obtenerHistorialMedico(idGato);
-        return ficha;
+    /**
+     * Obtiene información completa de un gato incluyendo historial médico
+     * 
+     * @return Ficha clínica del gato, o null si no existe
+     */
+    public FichaClinicaGato obtenerFichaClinica(Integer idGato) {
+        // TODO: BASE DE DATOS - Consultar gato con historial médico
+        // try {
+        //     String sql = "SELECT g.id, g.nombre, g.color, g.estado_salud, g.caracteristicas, " +
+        //                  "       g.edad_aproximada, f.nombre as familia, f.direccion " +
+        //                  "FROM Gatos g " +
+        //                  "LEFT JOIN Asignaciones a ON g.id = a.id_gato AND a.activa = true " +
+        //                  "LEFT JOIN Familias f ON a.id_familia = f.id " +
+        //                  "WHERE g.id = ?";
+        //     PreparedStatement stmt = conexion.prepareStatement(sql);
+        //     stmt.setInt(1, idGato);
+        //     ResultSet rs = stmt.executeQuery();
+        //     
+        //     if (rs.next()) {
+        //         FichaClinicaGato ficha = new FichaClinicaGato(
+        //             rs.getInt("id"),
+        //             rs.getString("nombre"),
+        //             rs.getString("color"),
+        //             (Integer) rs.getObject("edad_aproximada"),
+        //             rs.getString("estado_salud"),
+        //             rs.getString("caracteristicas"),
+        //             rs.getString("familia"),
+        //             rs.getString("direccion")
+        //         );
+        //         
+        //         // Obtener historial médico
+        //         ficha.historialMedico = obtenerHistorialMedico(idGato);
+        //         
+        //         return ficha;
+        //     }
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        // }
+        // return null;
+
+        // DATOS SIMULADOS - Eliminar cuando se implemente BD
+        if (idGato == 1) {
+            FichaClinicaGato ficha = new FichaClinicaGato(
+                1, "Michi", "Naranja", 12, "Sano", 
+                "Gato tranquilo, muy sociable",
+                "Familia González", "Calle Principal 123"
+            );
+            ficha.historialMedico = obtenerHistorialMedico(idGato);
+            return ficha;
+        } else if (idGato == 2) {
+            FichaClinicaGato ficha = new FichaClinicaGato(
+                2, "Pelusa", "Blanco", 8, "En tratamiento",
+                "Recuperándose de cirugía",
+                "Familia Martínez", "Av. Libertador 456"
+            );
+            ficha.historialMedico = obtenerHistorialMedico(idGato);
+            return ficha;
+        } else if (idGato == 3) {
+            FichaClinicaGato ficha = new FichaClinicaGato(
+                3, "Garfield", "Atigrado", 24, "Enfermo",
+                "Problemas digestivos",
+                "En colonia", "Sin asignación"
+            );
+            ficha.historialMedico = obtenerHistorialMedico(idGato);
+            return ficha;
+        }
+        return null;
     }
-    return null;
-}
 
-/**
- * Obtiene el historial médico de un gato
- */
-private List<RegistroHistorialMedico> obtenerHistorialMedico(Integer idGato) {
-    // TODO: BASE DE DATOS - Consultar historial médico
-    // try {
-    //     String sql = "SELECT dt.fecha, dt.diagnostico, dt.tratamiento, " +
-    //                  "       e.tipo_estudio, e.resultado " +
-    //                  "FROM DiagnosticoYTratamiento dt " +
-    //                  "LEFT JOIN Estudios e ON dt.id_estudio = e.id " +
-    //                  "WHERE dt.id_gato = ? " +
-    //                  "ORDER BY dt.fecha DESC";
-    //     PreparedStatement stmt = conexion.prepareStatement(sql);
-    //     stmt.setInt(1, idGato);
-    //     ResultSet rs = stmt.executeQuery();
-    //     
-    //     List<RegistroHistorialMedico> historial = new ArrayList<>();
-    //     while (rs.next()) {
-    //         historial.add(new RegistroHistorialMedico(
-    //             rs.getDate("fecha").toLocalDate(),
-    //             rs.getString("diagnostico"),
-    //             rs.getString("tratamiento"),
-    //             rs.getString("tipo_estudio"),
-    //             rs.getString("resultado")
-    //         ));
-    //     }
-    //     return historial;
-    // } catch (SQLException e) {
-    //     e.printStackTrace();
-    //     return new ArrayList<>();
-    // }
+    /**
+     * Obtiene el historial médico de un gato
+     */
+    private List<RegistroHistorialMedico> obtenerHistorialMedico(Integer idGato) {
+        // TODO: BASE DE DATOS - Consultar historial médico
+        // try {
+        //     String sql = "SELECT dt.fecha, dt.diagnostico, dt.tratamiento, " +
+        //                  "       e.tipo_estudio, e.resultado " +
+        //                  "FROM DiagnosticoYTratamiento dt " +
+        //                  "LEFT JOIN Estudios e ON dt.id_estudio = e.id " +
+        //                  "WHERE dt.id_gato = ? " +
+        //                  "ORDER BY dt.fecha DESC";
+        //     PreparedStatement stmt = conexion.prepareStatement(sql);
+        //     stmt.setInt(1, idGato);
+        //     ResultSet rs = stmt.executeQuery();
+        //     
+        //     List<RegistroHistorialMedico> historial = new ArrayList<>();
+        //     while (rs.next()) {
+        //         historial.add(new RegistroHistorialMedico(
+        //             rs.getDate("fecha").toLocalDate(),
+        //             rs.getString("diagnostico"),
+        //             rs.getString("tratamiento"),
+        //             rs.getString("tipo_estudio"),
+        //             rs.getString("resultado")
+        //         ));
+        //     }
+        //     return historial;
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        //     return new ArrayList<>();
+        // }
+
+        // DATOS SIMULADOS - Eliminar cuando se implemente BD
+        List<RegistroHistorialMedico> historial = new ArrayList<>();
+
+        if (idGato == 1) {
+            historial.add(new RegistroHistorialMedico(
+                LocalDate.of(2025, 10, 15),
+                "Chequeo general - Buen estado",
+                "Ninguno requerido",
+                "Examen físico",
+                "Normal"
+            ));
+            historial.add(new RegistroHistorialMedico(
+                LocalDate.of(2025, 9, 5),
+                "Vacunación antirrábica",
+                "Vacuna aplicada",
+                "Vacunación",
+                "Completada"
+            ));
+        } else if (idGato == 2) {
+            historial.add(new RegistroHistorialMedico(
+                LocalDate.of(2025, 11, 1),
+                "Post-operatorio de esterilización",
+                "Antibióticos y reposo",
+                "Control post-quirúrgico",
+                "En recuperación"
+            ));
+            historial.add(new RegistroHistorialMedico(
+                LocalDate.of(2025, 10, 20),
+                "Esterilización",
+                "Cirugía realizada exitosamente",
+                "Cirugía",
+                "Exitosa"
+            ));
+        } else if (idGato == 3) {
+            historial.add(new RegistroHistorialMedico(
+                LocalDate.of(2025, 11, 10),
+                "Gastroenteritis aguda",
+                "Dieta blanda y medicación",
+                "Análisis de sangre",
+                "Infección detectada"
+            ));
+        }
+
+        return historial;
+    }
+
+    /**
+     * Registra un nuevo diagnóstico y tratamiento
+     * 
+     * @return ID del diagnóstico registrado, o null si falló
+     */
+    public Integer registrarDiagnostico(Integer idGato, LocalDate fecha, String hora,
+                                       String diagnostico, String tratamiento) {
+        // TODO: BASE DE DATOS - Guardar diagnóstico y tratamiento
+        // try {
+        //     String sql = "INSERT INTO DiagnosticoYTratamiento " +
+        //                  "(id_gato, fecha, hora, diagnostico, tratamiento) " +
+        //                  "VALUES (?, ?, ?, ?, ?)";
+        //     PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        //     stmt.setInt(1, idGato);
+        //     stmt.setDate(2, java.sql.Date.valueOf(fecha));
+        //     stmt.setString(3, hora);
+        //     stmt.setString(4, diagnostico);
+        //     stmt.setString(5, tratamiento);
+        //     
+        //     int filasAfectadas = stmt.executeUpdate();
+        //     if (filasAfectadas > 0) {
+        //         ResultSet rs = stmt.getGeneratedKeys();
+        //         if (rs.next()) {
+        //             return rs.getInt(1);
+        //         }
+        //     }
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        //     return null;
+        // }
+
+        // SIMULACIÓN - Eliminar cuando se implemente BD
+        System.out.println("Diagnóstico registrado: Gato " + idGato + " - " + fecha + " " + hora);
+        System.out.println("Diagnóstico: " + diagnostico);
+        System.out.println("Tratamiento: " + tratamiento);
+        return new Random().nextInt(1000); // ID simulado
+    }
+
+        // ==================== CLASES DE DATOS (DTOs) - AGREGAR ====================
+
+        /**
+         * DTO para ficha clínica completa de un gato
+         */
+        public static class FichaClinicaGato {
+            public final Integer idGato;
+            public final String nombre;
+            public final String color;
+            public final Integer edadAproximada;
+            public final String estadoSalud;
+            public final String caracteristicas;
+            public final String ubicacionActual; // Nombre familia o "En colonia"
+            public final String direccion;
+            public List<RegistroHistorialMedico> historialMedico;
+
+            public FichaClinicaGato(Integer id, String nombre, String color, Integer edad,
+                                   String estado, String caracteristicas,
+                                   String ubicacion, String direccion) {
+                this.idGato = id;
+                this.nombre = nombre;
+                this.color = color;
+                this.edadAproximada = edad;
+                this.estadoSalud = estado;
+                this.caracteristicas = caracteristicas;
+                this.ubicacionActual = ubicacion;
+                this.direccion = direccion;
+                this.historialMedico = new ArrayList<>();
+            }
+        }
+
+        /**
+         * DTO para registro individual del historial médico
+         */
+        public static class RegistroHistorialMedico {
+            public final LocalDate fecha;
+            public final String diagnostico;
+            public final String tratamiento;
+            public final String tipoEstudio;
+            public final String resultado;
+
+            public RegistroHistorialMedico(LocalDate fecha, String diagnostico,
+                String tratamiento, String tipoEstudio,
+                String resultado) {
+                    this.fecha = fecha;
+                    this.diagnostico = diagnostico;
+                    this.tratamiento = tratamiento;
+                    this.tipoEstudio = tipoEstudio;
+                    this.resultado = resultado;
+                }
+        }
     
-    // DATOS SIMULADOS - Eliminar cuando se implemente BD
-    List<RegistroHistorialMedico> historial = new ArrayList<>();
-    
-    if (idGato == 1) {
-        historial.add(new RegistroHistorialMedico(
-            LocalDate.of(2025, 10, 15),
-            "Chequeo general - Buen estado",
-            "Ninguno requerido",
-            "Examen físico",
-            "Normal"
-        ));
-        historial.add(new RegistroHistorialMedico(
-            LocalDate.of(2025, 9, 5),
-            "Vacunación antirrábica",
-            "Vacuna aplicada",
-            "Vacunación",
-            "Completada"
-        ));
-    } else if (idGato == 2) {
-        historial.add(new RegistroHistorialMedico(
-            LocalDate.of(2025, 11, 1),
-            "Post-operatorio de esterilización",
-            "Antibióticos y reposo",
-            "Control post-quirúrgico",
-            "En recuperación"
-        ));
-        historial.add(new RegistroHistorialMedico(
-            LocalDate.of(2025, 10, 20),
-            "Esterilización",
-            "Cirugía realizada exitosamente",
-            "Cirugía",
-            "Exitosa"
-        ));
-    } else if (idGato == 3) {
-        historial.add(new RegistroHistorialMedico(
-            LocalDate.of(2025, 11, 10),
-            "Gastroenteritis aguda",
-            "Dieta blanda y medicación",
-            "Análisis de sangre",
-            "Infección detectada"
-        ));
+            // ==================== MÓDULO: ADMINISTRADOR - REPORTES ====================
+
+    /**
+     * Obtiene las estadísticas de gatos para el reporte
+     * 
+     * @return Datos estadísticos de gatos, o null si hay error
+     */
+    public EstadisticasGatos obtenerEstadisticasGatos() {
+        // TODO: BASE DE DATOS - Consultar estadísticas de gatos
+        // try {
+        //     // Cantidad de gatos esterilizados
+        //     String sqlEsterilizados = "SELECT COUNT(*) as total FROM Gatos " +
+        //                              "WHERE estado_salud = 'Esterilizado'";
+        //     PreparedStatement stmtEst = conexion.prepareStatement(sqlEsterilizados);
+        //     ResultSet rsEst = stmtEst.executeQuery();
+        //     int esterilizados = rsEst.next() ? rsEst.getInt("total") : 0;
+        //     
+        //     // Cantidad de gatos adoptados (asignación tipo Adopción Definitiva)
+        //     String sqlAdoptados = "SELECT COUNT(DISTINCT g.id) as total " +
+        //                          "FROM Gatos g " +
+        //                          "JOIN Asignaciones a ON g.id = a.id_gato " +
+        //                          "WHERE a.tipo_asignacion = 'Adopción Definitiva' AND a.activa = true";
+        //     PreparedStatement stmtAdop = conexion.prepareStatement(sqlAdoptados);
+        //     ResultSet rsAdop = stmtAdop.executeQuery();
+        //     int adoptados = rsAdop.next() ? rsAdop.getInt("total") : 0;
+        //     
+        //     // Cantidad de gatos en tránsito (asignación tipo Tránsito)
+        //     String sqlTransito = "SELECT COUNT(DISTINCT g.id) as total " +
+        //                         "FROM Gatos g " +
+        //                         "JOIN Asignaciones a ON g.id = a.id_gato " +
+        //                         "WHERE a.tipo_asignacion = 'Tránsito' AND a.activa = true";
+        //     PreparedStatement stmtTran = conexion.prepareStatement(sqlTransito);
+        //     ResultSet rsTran = stmtTran.executeQuery();
+        //     int transito = rsTran.next() ? rsTran.getInt("total") : 0;
+        //     
+        //     // Total de gatos registrados
+        //     String sqlTotal = "SELECT COUNT(*) as total FROM Gatos";
+        //     PreparedStatement stmtTotal = conexion.prepareStatement(sqlTotal);
+        //     ResultSet rsTotal = stmtTotal.executeQuery();
+        //     int total = rsTotal.next() ? rsTotal.getInt("total") : 0;
+        //     
+        //     return new EstadisticasGatos(esterilizados, adoptados, transito, total);
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        //     return null;
+        // }
+
+        // DATOS SIMULADOS - Eliminar cuando se implemente BD
+        // Generar datos aleatorios pero realistas para demostración
+        int totalGatos = 45;
+        int esterilizados = 28;
+        int adoptados = 15;
+        int transito = 8;
+
+        System.out.println("Estadísticas de gatos generadas:");
+        System.out.println("- Total de gatos: " + totalGatos);
+        System.out.println("- Esterilizados: " + esterilizados);
+        System.out.println("- Adoptados: " + adoptados);
+        System.out.println("- En tránsito: " + transito);
+
+        return new EstadisticasGatos(esterilizados, adoptados, transito, totalGatos);
+    }
+
+    /**
+     * Genera un reporte de gatos en formato de texto para PDF
+     * 
+     * @return Contenido del reporte como String
+     */
+    public String generarContenidoReporteGatos(EstadisticasGatos stats) {
+        StringBuilder reporte = new StringBuilder();
+
+        // Encabezado
+        reporte.append("═══════════════════════════════════════════════════════════\n");
+        reporte.append("              REPORTE DE GATOS - COLONIA FELINA\n");
+        reporte.append("═══════════════════════════════════════════════════════════\n\n");
+
+        // Fecha de generación
+        reporte.append("Fecha de generación: ").append(LocalDate.now()).append("\n");
+        reporte.append("Hora: ").append(java.time.LocalTime.now().format(
+            java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss")
+        )).append("\n\n");
+
+        // Estadísticas principales
+        reporte.append("───────────────────────────────────────────────────────────\n");
+        reporte.append("                    ESTADÍSTICAS GENERALES\n");
+        reporte.append("───────────────────────────────────────────────────────────\n\n");
+
+        reporte.append(String.format("%-40s %5d\n", "Total de gatos registrados:", stats.totalGatos));
+        reporte.append(String.format("%-40s %5d\n", "Gatos esterilizados:", stats.esterilizados));
+        reporte.append(String.format("%-40s %5d\n", "Gatos adoptados:", stats.adoptados));
+        reporte.append(String.format("%-40s %5d\n", "Gatos en tránsito:", stats.transito));
+
+        // Gatos en colonia (sin asignar)
+        int enColonia = stats.totalGatos - stats.adoptados - stats.transito;
+        reporte.append(String.format("%-40s %5d\n", "Gatos en colonia:", enColonia));
+
+        reporte.append("\n");
+
+        // Porcentajes
+        reporte.append("───────────────────────────────────────────────────────────\n");
+        reporte.append("                        PORCENTAJES\n");
+        reporte.append("───────────────────────────────────────────────────────────\n\n");
+
+        if (stats.totalGatos > 0) {
+            double porcEsterilizados = (stats.esterilizados * 100.0) / stats.totalGatos;
+            double porcAdoptados = (stats.adoptados * 100.0) / stats.totalGatos;
+            double porcTransito = (stats.transito * 100.0) / stats.totalGatos;
+            double porcColonia = (enColonia * 100.0) / stats.totalGatos;
+
+            reporte.append(String.format("%-40s %5.1f%%\n", "Porcentaje de esterilización:", porcEsterilizados));
+            reporte.append(String.format("%-40s %5.1f%%\n", "Porcentaje de adopción:", porcAdoptados));
+            reporte.append(String.format("%-40s %5.1f%%\n", "Porcentaje en tránsito:", porcTransito));
+            reporte.append(String.format("%-40s %5.1f%%\n", "Porcentaje en colonia:", porcColonia));
+        }
+
+        reporte.append("\n");
+
+        // Pie de reporte
+        reporte.append("───────────────────────────────────────────────────────────\n");
+        reporte.append("Reporte generado automáticamente por el Sistema de\n");
+        reporte.append("Gestión de Colonia de Bichitos\n");
+        reporte.append("───────────────────────────────────────────────────────────\n");
+
+        return reporte.toString();
     }
     
-    return historial;
-}
+        // ==================== MÓDULO: ADMINISTRADOR - GESTIÓN DE USUARIOS ====================
 
-/**
- * Registra un nuevo diagnóstico y tratamiento
- * 
- * @return ID del diagnóstico registrado, o null si falló
- */
-public Integer registrarDiagnostico(Integer idGato, LocalDate fecha, String hora,
-                                   String diagnostico, String tratamiento) {
-    // TODO: BASE DE DATOS - Guardar diagnóstico y tratamiento
-    // try {
-    //     String sql = "INSERT INTO DiagnosticoYTratamiento " +
-    //                  "(id_gato, fecha, hora, diagnostico, tratamiento) " +
-    //                  "VALUES (?, ?, ?, ?, ?)";
-    //     PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-    //     stmt.setInt(1, idGato);
-    //     stmt.setDate(2, java.sql.Date.valueOf(fecha));
-    //     stmt.setString(3, hora);
-    //     stmt.setString(4, diagnostico);
-    //     stmt.setString(5, tratamiento);
-    //     
-    //     int filasAfectadas = stmt.executeUpdate();
-    //     if (filasAfectadas > 0) {
-    //         ResultSet rs = stmt.getGeneratedKeys();
-    //         if (rs.next()) {
-    //             return rs.getInt(1);
-    //         }
-    //     }
-    // } catch (SQLException e) {
-    //     e.printStackTrace();
-    //     return null;
-    // }
-    
-    // SIMULACIÓN - Eliminar cuando se implemente BD
-    System.out.println("Diagnóstico registrado: Gato " + idGato + " - " + fecha + " " + hora);
-    System.out.println("Diagnóstico: " + diagnostico);
-    System.out.println("Tratamiento: " + tratamiento);
-    return new Random().nextInt(1000); // ID simulado
-}
+    /**
+     * Obtiene la lista completa de usuarios del sistema
+     * 
+     * @return Lista de usuarios con su información básica
+     */
+    public List<UsuarioInfo> obtenerTodosLosUsuarios() {
+        // TODO: BASE DE DATOS - Consultar todos los usuarios
+        // try {
+        //     String sql = "SELECT u.id_usuario, u.nombre_usuario, u.rol, " +
+        //                  "       COALESCE(v.correo_electronico, f.correo_electronico_designado, vet.correo, a.correo) as correo, " +
+        //                  "       COALESCE(v.numero_telefono, f.numero_telefono_designado, vet.telefono, a.telefono) as telefono " +
+        //                  "FROM Usuarios u " +
+        //                  "LEFT JOIN Voluntarios v ON u.id_usuario = v.id_usuario " +
+        //                  "LEFT JOIN FamiliaAdoptante f ON u.id_usuario = f.id_usuario " +
+        //                  "LEFT JOIN Veterinarios vet ON u.id_usuario = vet.id_usuario " +
+        //                  "LEFT JOIN Administradores a ON u.id_usuario = a.id_usuario " +
+        //                  "ORDER BY u.nombre_usuario";
+        //     
+        //     PreparedStatement stmt = conexion.prepareStatement(sql);
+        //     ResultSet rs = stmt.executeQuery();
+        //     
+        //     List<UsuarioInfo> usuarios = new ArrayList<>();
+        //     while (rs.next()) {
+        //         usuarios.add(new UsuarioInfo(
+        //             rs.getInt("id_usuario"),
+        //             rs.getString("nombre_usuario"),
+        //             rs.getString("rol"),
+        //             rs.getString("correo"),
+        //             rs.getString("telefono")
+        //         ));
+        //     }
+        //     return usuarios;
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        //     return new ArrayList<>();
+        // }
+
+        // DATOS SIMULADOS - Eliminar cuando se implemente BD
+        List<UsuarioInfo> usuarios = new ArrayList<>();
+
+        usuarios.add(new UsuarioInfo(1, "admin", "ADMINISTRADOR", "admin@colonia.com", "555-0001"));
+        usuarios.add(new UsuarioInfo(2, "voluntario1", "VOLUNTARIO", "vol1@colonia.com", "555-0002"));
+        usuarios.add(new UsuarioInfo(3, "voluntario2", "VOLUNTARIO", "vol2@colonia.com", "555-0003"));
+        usuarios.add(new UsuarioInfo(4, "familia_gonzalez", "FAMILIA", "gonzalez@email.com", "555-0004"));
+        usuarios.add(new UsuarioInfo(5, "familia_martinez", "FAMILIA", "martinez@email.com", "555-0005"));
+        usuarios.add(new UsuarioInfo(6, "dr_veterinario", "VETERINARIO", "vet@colonia.com", "555-0006"));
+        usuarios.add(new UsuarioInfo(7, "voluntario3", "VOLUNTARIO", "vol3@colonia.com", "555-0007"));
+        usuarios.add(new UsuarioInfo(8, "familia_lopez", "FAMILIA", "lopez@email.com", "555-0008"));
+
+        return usuarios;
+    }
+
+    /**
+     * Obtiene información detallada de un usuario específico
+     * 
+     * @return Información completa del usuario, o null si no existe
+     */
+    public UsuarioDetalle obtenerDetalleUsuario(Integer idUsuario) {
+        // TODO: BASE DE DATOS - Consultar usuario específico con todos sus datos
+        // try {
+        //     String sql = "SELECT u.*, " +
+        //                  "       v.correo_electronico as vol_correo, v.numero_telefono as vol_telefono, " +
+        //                  "       v.direccion as vol_direccion, v.reputacion as vol_reputacion, " +
+        //                  "       f.correo_electronico_designado as fam_correo, f.numero_telefono_designado as fam_telefono, " +
+        //                  "       f.direccion as fam_direccion, f.estado_de_familia, f.disponibilidad_de_familia " +
+        //                  "FROM Usuarios u " +
+        //                  "LEFT JOIN Voluntarios v ON u.id_usuario = v.id_usuario " +
+        //                  "LEFT JOIN FamiliaAdoptante f ON u.id_usuario = f.id_usuario " +
+        //                  "WHERE u.id_usuario = ?";
+        //     
+        //     PreparedStatement stmt = conexion.prepareStatement(sql);
+        //     stmt.setInt(1, idUsuario);
+        //     ResultSet rs = stmt.executeQuery();
+        //     
+        //     if (rs.next()) {
+        //         return new UsuarioDetalle(...); // Mapear todos los campos
+        //     }
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        // }
+        // return null;
+
+        // DATOS SIMULADOS
+        for (UsuarioInfo info : obtenerTodosLosUsuarios()) {
+            if (info.idUsuario.equals(idUsuario)) {
+                return new UsuarioDetalle(
+                    info.idUsuario,
+                    info.nombreUsuario,
+                    "password123", // En producción NO devolver la contraseña
+                    info.rol,
+                    info.correo,
+                    info.telefono,
+                    "Dirección de ejemplo " + idUsuario,
+                    info.rol.equals("VOLUNTARIO") ? "Buena" : null
+                );
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Registra un nuevo usuario en el sistema
+     * 
+     * @return ID del usuario creado, o null si falló
+     */
+    public Integer registrarUsuario(String nombreUsuario, String contrasena, String rol,
+                                   String correo, String telefono, String direccion) {
+        // TODO: BASE DE DATOS - Insertar nuevo usuario
+        // try {
+        //     // Primero insertar en tabla Usuarios
+        //     String sqlUsuario = "INSERT INTO Usuarios (nombre_usuario, contrasena, rol) VALUES (?, ?, ?)";
+        //     PreparedStatement stmtUsuario = conexion.prepareStatement(sqlUsuario, Statement.RETURN_GENERATED_KEYS);
+        //     stmtUsuario.setString(1, nombreUsuario);
+        //     stmtUsuario.setString(2, contrasena); // TODO: Hashear contraseña
+        //     stmtUsuario.setString(3, rol);
+        //     
+        //     int filasAfectadas = stmtUsuario.executeUpdate();
+        //     if (filasAfectadas > 0) {
+        //         ResultSet rs = stmtUsuario.getGeneratedKeys();
+        //         if (rs.next()) {
+        //             int idUsuario = rs.getInt(1);
+        //             
+        //             // Insertar en tabla específica según el rol
+        //             if (rol.equals("VOLUNTARIO")) {
+        //                 String sqlVol = "INSERT INTO Voluntarios (id_usuario, correo_electronico, numero_telefono, direccion) " +
+        //                                "VALUES (?, ?, ?, ?)";
+        //                 PreparedStatement stmtVol = conexion.prepareStatement(sqlVol);
+        //                 stmtVol.setInt(1, idUsuario);
+        //                 stmtVol.setString(2, correo);
+        //                 stmtVol.setString(3, telefono);
+        //                 stmtVol.setString(4, direccion);
+        //                 stmtVol.executeUpdate();
+        //             } else if (rol.equals("FAMILIA")) {
+        //                 String sqlFam = "INSERT INTO FamiliaAdoptante (id_usuario, correo_electronico_designado, " +
+        //                                "numero_telefono_designado, direccion) VALUES (?, ?, ?, ?)";
+        //                 PreparedStatement stmtFam = conexion.prepareStatement(sqlFam);
+        //                 stmtFam.setInt(1, idUsuario);
+        //                 stmtFam.setString(2, correo);
+        //                 stmtFam.setString(3, telefono);
+        //                 stmtFam.setString(4, direccion);
+        //                 stmtFam.executeUpdate();
+        //             }
+        //             // Similar para VETERINARIO y ADMINISTRADOR
+        //             
+        //             return idUsuario;
+        //         }
+        //     }
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        //     return null;
+        // }
+
+        // SIMULACIÓN
+        System.out.println("Usuario registrado: " + nombreUsuario + " (" + rol + ")");
+        return new Random().nextInt(1000) + 100;
+    }
+
+    /**
+     * Actualiza la información de un usuario existente
+     * 
+     * @return true si la actualización fue exitosa, false en caso contrario
+     */
+    public boolean actualizarUsuario(Integer idUsuario, String nombreUsuario, String contrasena,
+                                    String correo, String telefono, String direccion) {
+        // TODO: BASE DE DATOS - Actualizar usuario
+        // try {
+        //     String sqlUsuario = "UPDATE Usuarios SET nombre_usuario = ?, contrasena = ? WHERE id_usuario = ?";
+        //     PreparedStatement stmtUsuario = conexion.prepareStatement(sqlUsuario);
+        //     stmtUsuario.setString(1, nombreUsuario);
+        //     stmtUsuario.setString(2, contrasena); // TODO: Hashear contraseña
+        //     stmtUsuario.setInt(3, idUsuario);
+        //     stmtUsuario.executeUpdate();
+        //     
+        //     // Actualizar tabla específica según el rol
+        //     // UPDATE Voluntarios SET correo_electronico = ?, numero_telefono = ?, direccion = ? WHERE id_usuario = ?
+        //     
+        //     return true;
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        //     return false;
+        // }
+
+        // SIMULACIÓN
+        System.out.println("Usuario actualizado: ID " + idUsuario);
+        return true;
+    }
+
+    /**
+     * Elimina un usuario del sistema
+     * 
+     * @return true si la eliminación fue exitosa, false en caso contrario
+     */
+    public boolean eliminarUsuario(Integer idUsuario) {
+        // TODO: BASE DE DATOS - Eliminar usuario (con CASCADE para datos relacionados)
+        // try {
+        //     String sql = "DELETE FROM Usuarios WHERE id_usuario = ?";
+        //     PreparedStatement stmt = conexion.prepareStatement(sql);
+        //     stmt.setInt(1, idUsuario);
+        //     
+        //     int filasAfectadas = stmt.executeUpdate();
+        //     return filasAfectadas > 0;
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        //     return false;
+        // }
+
+        // SIMULACIÓN
+        System.out.println("Usuario eliminado: ID " + idUsuario);
+        return true;
+    }
 
     // ==================== CLASES DE DATOS (DTOs) - AGREGAR ====================
 
     /**
-     * DTO para ficha clínica completa de un gato
+     * DTO para información básica de usuario (para listado)
      */
-    public static class FichaClinicaGato {
-        public final Integer idGato;
-        public final String nombre;
-        public final String color;
-        public final Integer edadAproximada;
-        public final String estadoSalud;
-        public final String caracteristicas;
-        public final String ubicacionActual; // Nombre familia o "En colonia"
-        public final String direccion;
-        public List<RegistroHistorialMedico> historialMedico;
+    public static class UsuarioInfo {
+        public final Integer idUsuario;
+        public final String nombreUsuario;
+        public final String rol;
+        public final String correo;
+        public final String telefono;
 
-        public FichaClinicaGato(Integer id, String nombre, String color, Integer edad,
-                               String estado, String caracteristicas,
-                               String ubicacion, String direccion) {
-            this.idGato = id;
-            this.nombre = nombre;
-            this.color = color;
-            this.edadAproximada = edad;
-            this.estadoSalud = estado;
-            this.caracteristicas = caracteristicas;
-            this.ubicacionActual = ubicacion;
-            this.direccion = direccion;
-            this.historialMedico = new ArrayList<>();
+        public UsuarioInfo(Integer id, String nombre, String rol, String correo, String telefono) {
+            this.idUsuario = id;
+            this.nombreUsuario = nombre;
+            this.rol = rol;
+            this.correo = correo != null ? correo : "No especificado";
+            this.telefono = telefono != null ? telefono : "No especificado";
         }
     }
 
     /**
-     * DTO para registro individual del historial médico
+     * DTO para información detallada de usuario (para edición)
      */
-    public static class RegistroHistorialMedico {
-        public final LocalDate fecha;
-        public final String diagnostico;
-        public final String tratamiento;
-        public final String tipoEstudio;
-        public final String resultado;
+    public static class UsuarioDetalle {
+        public final Integer idUsuario;
+        public final String nombreUsuario;
+        public final String contrasena;
+        public final String rol;
+        public final String correo;
+        public final String telefono;
+        public final String direccion;
+        public final String datosAdicionales; // Reputación, estado, etc.
 
-        public RegistroHistorialMedico(LocalDate fecha, String diagnostico,
-            String tratamiento, String tipoEstudio,
-            String resultado) {
-                this.fecha = fecha;
-                this.diagnostico = diagnostico;
-                this.tratamiento = tratamiento;
-                this.tipoEstudio = tipoEstudio;
-                this.resultado = resultado;
-            }
+        public UsuarioDetalle(Integer id, String nombre, String contrasena, String rol,
+                             String correo, String telefono, String direccion, String datosAdicionales) {
+            this.idUsuario = id;
+            this.nombreUsuario = nombre;
+            this.contrasena = contrasena;
+            this.rol = rol;
+            this.correo = correo;
+            this.telefono = telefono;
+            this.direccion = direccion;
+            this.datosAdicionales = datosAdicionales;
+        }
     }
-    
+
+    // ==================== CLASES DE DATOS (DTOs) - AGREGAR ====================
+
+    /**
+     * DTO para estadísticas de gatos
+     */
+    public static class EstadisticasGatos {
+        public final int esterilizados;
+        public final int adoptados;
+        public final int transito;
+        public final int totalGatos;
+
+        public EstadisticasGatos(int esterilizados, int adoptados, int transito, int totalGatos) {
+            this.esterilizados = esterilizados;
+            this.adoptados = adoptados;
+            this.transito = transito;
+            this.totalGatos = totalGatos;
+        }
+    }
+        
 }
