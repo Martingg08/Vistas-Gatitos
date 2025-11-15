@@ -26,6 +26,84 @@ public class Controlador {
         // TODO: Inicializar conexión a BD o DAOs
     }
     
+        // ==================== MÓDULO: ADMINISTRADOR - VER VOLUNTARIOS ====================
+
+    /**
+     * Obtiene la lista simple de todos los voluntarios
+     * 
+     * @return Lista de voluntarios con su información básica
+     */
+    public List<VoluntarioSimple> obtenerVoluntarios() {
+        // TODO: BASE DE DATOS - Consultar voluntarios
+        // try {
+        //     String sql = "SELECT v.id_usuario, u.nombre_usuario, v.correo_electronico, " +
+        //                  "       v.numero_telefono, v.direccion, v.reputacion, v.detalles_de_reputacion " +
+        //                  "FROM Voluntario v " +
+        //                  "JOIN Usuario u ON v.id_usuario = u.id_usuario " +
+        //                  "ORDER BY u.nombre_usuario";
+        //     
+        //     PreparedStatement stmt = conexion.prepareStatement(sql);
+        //     ResultSet rs = stmt.executeQuery();
+        //     
+        //     List<VoluntarioSimple> voluntarios = new ArrayList<>();
+        //     while (rs.next()) {
+        //         voluntarios.add(new VoluntarioSimple(
+        //             rs.getInt("id_usuario"),
+        //             rs.getString("nombre_usuario"),
+        //             rs.getString("correo_electronico"),
+        //             rs.getString("numero_telefono"),
+        //             rs.getString("direccion"),
+        //             rs.getDouble("reputacion"),
+        //             rs.getString("detalles_de_reputacion")
+        //         ));
+        //     }
+        //     return voluntarios;
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        //     return new ArrayList<>();
+        // }
+
+        // DATOS SIMULADOS - Eliminar cuando se implemente BD
+        List<VoluntarioSimple> voluntarios = new ArrayList<>();
+
+        voluntarios.add(new VoluntarioSimple(2, "voluntario1", "vol1@colonia.com", 
+                                             "555-0002", "Av. Principal 123", 4.5, "Muy responsable"));
+        voluntarios.add(new VoluntarioSimple(3, "voluntario2", "vol2@colonia.com", 
+                                             "555-0003", "Calle Secundaria 456", 4.0, "Buen desempeño"));
+        voluntarios.add(new VoluntarioSimple(7, "maria_vol", "maria@colonia.com", 
+                                             "555-0007", "Boulevard Norte 789", 5.0, "Excelente"));
+        voluntarios.add(new VoluntarioSimple(9, "carlos_vol", "carlos@colonia.com", 
+                                             "555-0009", "Pasaje Sur 321", 3.8, null));
+
+        return voluntarios;
+    }
+
+    // ==================== CLASES DE DATOS (DTOs) - AGREGAR ====================
+
+    /**
+     * DTO simple para información de voluntarios
+     */
+    public static class VoluntarioSimple {
+        public final Integer idUsuario;
+        public final String nombreUsuario;
+        public final String correoElectronico;
+        public final String numeroTelefono;
+        public final String direccion;
+        public final Double reputacion;
+        public final String detallesReputacion;
+
+        public VoluntarioSimple(Integer id, String nombre, String correo, String telefono,
+                               String direccion, Double reputacion, String detalles) {
+            this.idUsuario = id;
+            this.nombreUsuario = nombre;
+            this.correoElectronico = correo != null ? correo : "No especificado";
+            this.numeroTelefono = telefono != null ? telefono : "No especificado";
+            this.direccion = direccion != null ? direccion : "No especificada";
+            this.reputacion = reputacion;
+            this.detallesReputacion = detalles;
+        }
+    }
+    
     // ==================== MÓDULO: GATOS ====================
     
     /**

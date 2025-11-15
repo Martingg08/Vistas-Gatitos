@@ -76,7 +76,7 @@ public class RegistrarUsuarioNuevo extends javax.swing.JPanel {
         ComboBoxRolRegistro.setBackground(new java.awt.Color(102, 102, 102));
         ComboBoxRolRegistro.setFont(new java.awt.Font("Aptos", 0, 12)); // NOI18N
         ComboBoxRolRegistro.setForeground(new java.awt.Color(255, 255, 255));
-        ComboBoxRolRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar rol...", "Administrador", "Veterinario", "Voluntario" }));
+        ComboBoxRolRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar rol...", "Administrador", "Veterinario", "Voluntario", "Familia Adoptante"}));
 
         ButtonRegistrar.setBackground(new java.awt.Color(0, 102, 153));
         ButtonRegistrar.setFont(new java.awt.Font("Aptos", 0, 14)); // NOI18N

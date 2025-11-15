@@ -152,12 +152,44 @@ public class InicioSesion extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextFieldUsuarioInicioSesionActionPerformed
 
-    private void ButtonIniciarSesiónInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonIniciarSesiónInicioSesionActionPerformed
-        // TODO add your handling code here:
-        mainFrame.setVistaAdministrador();
-        //mainFrame.setVistaVeterinario();
-        //mainFrame.setVistaVoluntario();
-    }//GEN-LAST:event_ButtonIniciarSesiónInicioSesionActionPerformed
+    private void ButtonIniciarSesiónInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {
+    // TODO: En producción, aquí se validaría usuario y contraseña contra la BD
+    // y se determinaría el rol automáticamente
+    
+    // Opciones de vistas disponibles
+    String[] vistas = {
+        "Vista Administrador",
+        "Vista Veterinario",
+        "Vista Voluntario"
+    };
+    
+    // Mostrar diálogo con selector
+    String seleccion = (String) javax.swing.JOptionPane.showInputDialog(
+        this,
+        "Seleccione la vista que desea visualizar:\n" +
+        "(En producción, esto se determinaría automáticamente según el rol del usuario)",
+        "Selección de Vista - MODO DEMOSTRACIÓN",
+        javax.swing.JOptionPane.QUESTION_MESSAGE,
+        null,
+        vistas,
+        vistas[0]
+    );
+    
+    // Redirigir según la selección
+    if (seleccion != null) {
+        switch (seleccion) {
+            case "Vista Administrador":
+                mainFrame.setVistaAdministrador();
+                break;
+            case "Vista Veterinario":
+                mainFrame.setVistaVeterinario();
+                break;
+            case "Vista Voluntario":
+                mainFrame.setVistaVoluntario();
+                break;
+        }
+    }
+}
 
     private void ButtonRegistrarNuevoUsuarioInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRegistrarNuevoUsuarioInicioSesionActionPerformed
         // TODO add your handling code here:

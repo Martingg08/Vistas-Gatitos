@@ -673,7 +673,8 @@ private void initComponents() {
     OpcionesVistaAdministrador = new javax.swing.JPanel();
     LabelUsuarioAdministrador = new javax.swing.JLabel();
     BotonGenerarReporte = new javax.swing.JButton();
-    BotonAdministrarUsuarios = new javax.swing.JButton(); // ← NUEVO BOTÓN
+    BotonAdministrarUsuarios = new javax.swing.JButton();
+    BotonVerVoluntarios = new javax.swing.JButton(); // ← Debe estar aquí
     BotonCerrarSesiónAdministrador = new javax.swing.JButton();
     ContenedorPrincipalAdministrador = new javax.swing.JPanel();
 
@@ -697,7 +698,6 @@ private void initComponents() {
         }
     });
 
-    // ========== NUEVO BOTÓN: Administrar Usuarios ==========
     BotonAdministrarUsuarios.setBackground(new java.awt.Color(0, 102, 153));
     BotonAdministrarUsuarios.setFont(new java.awt.Font("Aptos", 0, 18));
     BotonAdministrarUsuarios.setForeground(new java.awt.Color(255, 255, 255));
@@ -706,6 +706,17 @@ private void initComponents() {
     BotonAdministrarUsuarios.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             BotonAdministrarUsuariosActionPerformed(evt);
+        }
+    });
+
+    BotonVerVoluntarios.setBackground(new java.awt.Color(0, 102, 153));
+    BotonVerVoluntarios.setFont(new java.awt.Font("Aptos", 0, 18));
+    BotonVerVoluntarios.setForeground(new java.awt.Color(255, 255, 255));
+    BotonVerVoluntarios.setText("Ver voluntarios");
+    BotonVerVoluntarios.setBorderPainted(false);
+    BotonVerVoluntarios.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            BotonVerVoluntariosActionPerformed(evt);
         }
     });
 
@@ -732,6 +743,7 @@ private void initComponents() {
                     .addGap(30, 30, 30)
                     .addGroup(OpcionesVistaAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(BotonCerrarSesiónAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BotonVerVoluntarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotonAdministrarUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotonGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(30, 30, 30)))
@@ -742,11 +754,13 @@ private void initComponents() {
         .addGroup(OpcionesVistaAdministradorLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(LabelUsuarioAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(250, 250, 250)
+            .addGap(200, 200, 200)
             .addComponent(BotonGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(50, 50, 50)
             .addComponent(BotonAdministrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
+            .addGap(50, 50, 50)
+            .addComponent(BotonVerVoluntarios, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
             .addComponent(BotonCerrarSesiónAdministrador)
             .addGap(50, 50, 50))
     );
@@ -1232,7 +1246,114 @@ private void mostrarAdministracionUsuarios() {
         ContenedorPrincipalAdministrador.repaint();
     }
     
-    
+        // ==================== MÓDULO: VER VOLUNTARIOS ====================
+
+    /**
+     * Muestra la lista simple de voluntarios
+     */
+    private void mostrarListaVoluntarios() {
+        JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
+        panelPrincipal.setBackground(new Color(102, 102, 102));
+        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        // Título
+        JLabel labelTitulo = new JLabel("Lista de Voluntarios");
+        labelTitulo.setFont(new java.awt.Font("Aptos", java.awt.Font.BOLD, 32));
+        labelTitulo.setForeground(Color.WHITE);
+        labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        panelPrincipal.add(labelTitulo, BorderLayout.NORTH);
+
+        // Obtener voluntarios
+        List<Controlador.VoluntarioSimple> voluntarios = controlador.obtenerVoluntarios();
+
+        // Panel con la tabla
+        JPanel panelTabla = new JPanel(new BorderLayout(10, 10));
+        panelTabla.setBackground(new Color(102, 102, 102));
+
+        // Info
+        JLabel labelInfo = new JLabel(voluntarios.size() + " voluntario(s) encontrado(s)");
+        labelInfo.setFont(new java.awt.Font("Aptos", java.awt.Font.PLAIN, 14));
+        labelInfo.setForeground(Color.LIGHT_GRAY);
+        panelTabla.add(labelInfo, BorderLayout.NORTH);
+
+        // Crear tabla
+        String[] columnas = {"ID", "Nombre Usuario", "Correo", "Teléfono", "Dirección", "Reputación", "Detalles"};
+        Object[][] datos = new Object[voluntarios.size()][7];
+
+        for (int i = 0; i < voluntarios.size(); i++) {
+            Controlador.VoluntarioSimple vol = voluntarios.get(i);
+            datos[i][0] = vol.idUsuario;
+            datos[i][1] = vol.nombreUsuario;
+            datos[i][2] = vol.correoElectronico;
+            datos[i][3] = vol.numeroTelefono;
+            datos[i][4] = vol.direccion;
+            datos[i][5] = vol.reputacion != null ? String.format("%.1f", vol.reputacion) : "Sin evaluar";
+            datos[i][6] = vol.detallesReputacion != null ? vol.detallesReputacion : "-";
+        }
+
+        JTable tabla = new JTable(datos, columnas) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tabla.setFont(new java.awt.Font("Aptos", java.awt.Font.PLAIN, 13));
+        tabla.setRowHeight(35);
+        tabla.getTableHeader().setFont(new java.awt.Font("Aptos", java.awt.Font.BOLD, 13));
+        tabla.getTableHeader().setBackground(new Color(0, 102, 153));
+        tabla.getTableHeader().setForeground(Color.WHITE);
+        tabla.setBackground(new Color(204, 204, 204));
+        tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        // Ajustar anchos
+        tabla.getColumnModel().getColumn(0).setPreferredWidth(50);   // ID
+        tabla.getColumnModel().getColumn(1).setPreferredWidth(150);  // Nombre
+        tabla.getColumnModel().getColumn(2).setPreferredWidth(200);  // Correo
+        tabla.getColumnModel().getColumn(3).setPreferredWidth(120);  // Teléfono
+        tabla.getColumnModel().getColumn(4).setPreferredWidth(250);  // Dirección
+        tabla.getColumnModel().getColumn(5).setPreferredWidth(100);  // Reputación
+        tabla.getColumnModel().getColumn(6).setPreferredWidth(200);  // Detalles
+
+        JScrollPane scrollTabla = new JScrollPane(tabla);
+        scrollTabla.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panelTabla.add(scrollTabla, BorderLayout.CENTER);
+
+        panelPrincipal.add(panelTabla, BorderLayout.CENTER);
+
+        // Botón volver
+        JButton botonVolver = new JButton("Volver");
+        botonVolver.setFont(new java.awt.Font("Aptos", java.awt.Font.PLAIN, 16));
+        botonVolver.setBackground(new Color(0, 102, 153));
+        botonVolver.setForeground(Color.WHITE);
+        botonVolver.setBorderPainted(false);
+        botonVolver.setPreferredSize(new Dimension(150, 40));
+        botonVolver.addActionListener(e -> {
+            ContenedorPrincipalAdministrador.removeAll();
+            ContenedorPrincipalAdministrador.revalidate();
+            ContenedorPrincipalAdministrador.repaint();
+        });
+
+        JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelBoton.setBackground(new Color(102, 102, 102));
+        panelBoton.add(botonVolver);
+
+        panelPrincipal.add(panelBoton, BorderLayout.SOUTH);
+
+        // Mostrar
+        ContenedorPrincipalAdministrador.removeAll();
+        ContenedorPrincipalAdministrador.setLayout(new BorderLayout());
+
+        JScrollPane scrollPane = new JScrollPane(panelPrincipal);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.setBorder(null);
+
+        ContenedorPrincipalAdministrador.add(scrollPane, BorderLayout.CENTER);
+        ContenedorPrincipalAdministrador.revalidate();
+        ContenedorPrincipalAdministrador.repaint();
+    }
 
     // ==================== MANEJADORES DE EVENTOS ====================
 
@@ -1247,12 +1368,17 @@ private void mostrarAdministracionUsuarios() {
     private void BotonAdministrarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {
         mostrarAdministracionUsuarios();
     }
+    
+    private void BotonVerVoluntariosActionPerformed(java.awt.event.ActionEvent evt) {
+    mostrarListaVoluntarios();
+}
 
     // ==================== VARIABLES DE COMPONENTES ====================
     
     private javax.swing.JButton BotonAdministrarUsuarios;
     private javax.swing.JButton BotonCerrarSesiónAdministrador;
     private javax.swing.JButton BotonGenerarReporte;
+    private javax.swing.JButton BotonVerVoluntarios;
     private javax.swing.JPanel ContenedorPrincipalAdministrador;
     private javax.swing.JLabel LabelUsuarioAdministrador;
     private javax.swing.JPanel OpcionesVistaAdministrador;
