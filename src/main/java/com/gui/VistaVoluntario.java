@@ -1346,26 +1346,26 @@ public class VistaVoluntario extends javax.swing.JPanel {
         gbc.weightx = 0.2;
         formularioRegistrarGato.add(botonSeleccionarFoto, gbc);
         
-        // ========== Campo Código QR ==========
+        // ========== Checkbox Generar Código QR ==========
         gbc.gridwidth = 1;
-        JLabel labelCodigoQR = new JLabel("Código QR:");
+        JLabel labelCodigoQR = new JLabel("Generar Código QR:");
         labelCodigoQR.setFont(new Font("Aptos", Font.PLAIN, 18));
         labelCodigoQR.setForeground(Color.WHITE);
         gbc.gridx = 0;
         gbc.gridy = 7;
         gbc.weightx = 0.3;
         formularioRegistrarGato.add(labelCodigoQR, gbc);
-        
-        JTextField textFieldCodigoQR = new JTextField();
-        textFieldCodigoQR.setFont(new Font("Aptos", Font.PLAIN, 16));
-        textFieldCodigoQR.setBackground(new Color(204, 204, 204));
-        textFieldCodigoQR.setForeground(Color.BLACK);
-        textFieldCodigoQR.setPreferredSize(new Dimension(300, 35));
+
+        JCheckBox checkBoxGenerarQR = new JCheckBox("Generar código QR automáticamente");
+        checkBoxGenerarQR.setFont(new Font("Aptos", Font.PLAIN, 16));
+        checkBoxGenerarQR.setForeground(Color.WHITE);
+        checkBoxGenerarQR.setBackground(new Color(102, 102, 102));
+        checkBoxGenerarQR.setSelected(true); // Marcado por defecto
         gbc.gridx = 1;
         gbc.gridy = 7;
         gbc.gridwidth = 2;
         gbc.weightx = 0.7;
-        formularioRegistrarGato.add(textFieldCodigoQR, gbc);
+        formularioRegistrarGato.add(checkBoxGenerarQR, gbc);
         
         // ========== Panel de Botones ==========
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
@@ -1385,7 +1385,6 @@ public class VistaVoluntario extends javax.swing.JPanel {
             textFieldEstadoSalud.setText("");
             textFieldEdad.setText("");
             textFieldFoto.setText("");
-            textFieldCodigoQR.setText("");
         });
         panelBotones.add(botonCancelar);
         
@@ -1404,11 +1403,12 @@ public class VistaVoluntario extends javax.swing.JPanel {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             // Validar edad si se ingresó
+            Integer edadMeses = null;
             if (!textFieldEdad.getText().trim().isEmpty()) {
                 try {
-                    Integer.parseInt(textFieldEdad.getText().trim());
+                    edadMeses = Integer.parseInt(textFieldEdad.getText().trim());
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(formularioRegistrarGato,
                             "La edad debe ser un número válido",
@@ -1417,18 +1417,35 @@ public class VistaVoluntario extends javax.swing.JPanel {
                     return;
                 }
             }
-            
+
+            String nombreGato = textFieldNombre.getText().trim();
+            String colorGato = textFieldColor.getText().trim();
+            String caracteristicas = textAreaCaracteristicas.getText().trim();
+            String estadoSalud = textFieldEstadoSalud.getText().trim();
+            String rutaFoto = textFieldFoto.getText().trim();
+            boolean generarQR = checkBoxGenerarQR.isSelected();
+
             // TODO: BASE DE DATOS - Guardar gato en la base de datos
             // INSERT INTO Gatos (nombre, color, caracteristicas, estado_salud, edad_aproximada, foto, codigo_qr)
             // VALUES (?, ?, ?, ?, ?, ?, ?)
-            
+            // Integer idGatoRegistrado = guardarGatoEnBD(nombreGato, colorGato, caracteristicas, estadoSalud, edadMeses, rutaFoto);
+
+            // Simular ID del gato registrado (en producción vendría de la BD)
+            Integer idGatoRegistrado = new java.util.Random().nextInt(10000);
+
             JOptionPane.showMessageDialog(formularioRegistrarGato,
-                    "Gato registrado exitosamente\n" +
-                    "Nombre: " + textFieldNombre.getText() + "\n" +
+                    "¡Gato registrado exitosamente!\n\n" +
+                    "Nombre: " + nombreGato + "\n" +
+                    "ID asignado: " + idGatoRegistrado + "\n\n" +
                     "(Funcionalidad de guardado pendiente de implementación)",
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
-            
+
+            // Generar y descargar código QR si está marcado
+            if (generarQR) {
+                generarYDescargarCodigoQR(idGatoRegistrado, nombreGato);
+            }
+
             // Limpiar formulario después de registrar
             textFieldNombre.setText("");
             textFieldColor.setText("");
@@ -1436,7 +1453,7 @@ public class VistaVoluntario extends javax.swing.JPanel {
             textFieldEstadoSalud.setText("");
             textFieldEdad.setText("");
             textFieldFoto.setText("");
-            textFieldCodigoQR.setText("");
+            checkBoxGenerarQR.setSelected(true);
         });
         panelBotones.add(botonRegistrar);
         
@@ -1461,6 +1478,142 @@ public class VistaVoluntario extends javax.swing.JPanel {
         ContenedorPrincipalVoluntario.revalidate();
         ContenedorPrincipalVoluntario.repaint();
     }
+    
+    // ==================== MÓDULO: GENERACIÓN DE CÓDIGO QR ====================
+
+/**
+ * Genera un código QR para un gato y permite descargarlo
+ */
+private void generarYDescargarCodigoQR(Integer idGato, String nombreGato) {
+    try {
+        // Contenido del código QR - Puedes personalizarlo según necesites
+        // Por ejemplo, puede ser una URL, JSON con datos, o simplemente el ID
+        String contenidoQR = String.format(
+            "GATO_ID:%d\nNOMBRE:%s\nSISTEMA:Colonia Felina\nFECHA:%s",
+            idGato,
+            nombreGato,
+            java.time.LocalDate.now()
+        );
+        
+        // Generar el código QR
+        int tamano = 400; // 400x400 pixels
+        java.awt.image.BufferedImage imagenQR = generarImagenQR(contenidoQR, tamano, tamano);
+        
+        // Preguntar al usuario dónde guardar el archivo
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar Código QR");
+        
+        // Nombre sugerido para el archivo
+        String nombreArchivo = "QR_" + nombreGato.replaceAll("\\s+", "_") + "_" + idGato + ".png";
+        fileChooser.setSelectedFile(new java.io.File(nombreArchivo));
+        
+        // Filtro para PNG
+        javax.swing.filechooser.FileNameExtensionFilter filter = 
+            new javax.swing.filechooser.FileNameExtensionFilter("Imágenes PNG (*.png)", "png");
+        fileChooser.setFileFilter(filter);
+        
+        int resultado = fileChooser.showSaveDialog(this);
+        
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            java.io.File archivo = fileChooser.getSelectedFile();
+            
+            // Asegurar extensión .png
+            if (!archivo.getName().toLowerCase().endsWith(".png")) {
+                archivo = new java.io.File(archivo.getAbsolutePath() + ".png");
+            }
+            
+            // Guardar la imagen
+            javax.imageio.ImageIO.write(imagenQR, "PNG", archivo);
+            
+            // TODO: BASE DE DATOS - Guardar referencia del QR en la base de datos
+            // UPDATE Gatos SET codigo_qr = ? WHERE id = ?
+            // String rutaQR = archivo.getAbsolutePath();
+            // guardarRutaQREnBD(idGato, rutaQR);
+            
+            // Mostrar confirmación con opción de abrir
+            int abrir = JOptionPane.showConfirmDialog(this,
+                "✅ Código QR generado exitosamente\n\n" +
+                "Ubicación: " + archivo.getAbsolutePath() + "\n\n" +
+                "¿Desea abrir la imagen?",
+                "QR Generado",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+            
+            if (abrir == JOptionPane.YES_OPTION) {
+                abrirArchivo(archivo);
+            }
+        }
+        
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this,
+            "Error al generar el código QR:\n" + ex.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+}
+
+/**
+ * Genera una imagen BufferedImage con el código QR
+ */
+private java.awt.image.BufferedImage generarImagenQR(String contenido, int ancho, int alto) 
+        throws com.google.zxing.WriterException {
+    
+    // Configurar el generador de QR
+    com.google.zxing.qrcode.QRCodeWriter qrCodeWriter = new com.google.zxing.qrcode.QRCodeWriter();
+    
+    // Configurar parámetros del QR
+    java.util.Map<com.google.zxing.EncodeHintType, Object> hints = new java.util.HashMap<>();
+    hints.put(com.google.zxing.EncodeHintType.CHARACTER_SET, "UTF-8");
+    hints.put(com.google.zxing.EncodeHintType.ERROR_CORRECTION, 
+              com.google.zxing.qrcode.decoder.ErrorCorrectionLevel.H);
+    hints.put(com.google.zxing.EncodeHintType.MARGIN, 2);
+    
+    // Generar la matriz de bits del QR
+    com.google.zxing.common.BitMatrix bitMatrix = qrCodeWriter.encode(
+        contenido, 
+        com.google.zxing.BarcodeFormat.QR_CODE, 
+        ancho, 
+        alto, 
+        hints
+    );
+    
+    // Convertir la matriz de bits a imagen BufferedImage
+    java.awt.image.BufferedImage imagen = new java.awt.image.BufferedImage(
+        ancho, 
+        alto, 
+        java.awt.image.BufferedImage.TYPE_INT_RGB
+    );
+    
+    for (int x = 0; x < ancho; x++) {
+        for (int y = 0; y < alto; y++) {
+            // Negro para los bits activos, blanco para los inactivos
+            imagen.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+        }
+    }
+    
+    return imagen;
+}
+
+/**
+ * Abre un archivo con la aplicación predeterminada del sistema
+ */
+private void abrirArchivo(java.io.File archivo) {
+    try {
+        if (java.awt.Desktop.isDesktopSupported()) {
+            java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+            if (archivo.exists()) {
+                desktop.open(archivo);
+            }
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this,
+            "No se pudo abrir el archivo automáticamente.\n" +
+            "Por favor, ábralo manualmente desde: " + archivo.getAbsolutePath(),
+            "Información",
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+}
 
     // ==================== MÓDULO: ASIGNAR GATO A FAMILIA ====================
     
