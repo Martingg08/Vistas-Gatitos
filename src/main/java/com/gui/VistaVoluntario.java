@@ -19,6 +19,7 @@ public class VistaVoluntario extends javax.swing.JPanel {
     private Main mainFrame;
     private JPanel formularioRegistrarGato;
     private JPanel panelCalendario;
+    private Controlador controlador;
     
     // TODO: REEMPLAZAR CON EL VOLUNTARIO REAL DE LA SESIÓN - Obtener desde sistema de autenticación
     private Integer idVoluntarioActual = 1;
@@ -27,10 +28,12 @@ public class VistaVoluntario extends javax.swing.JPanel {
     
     public VistaVoluntario(Main mainFrame) {
         this.mainFrame = mainFrame;
+        this.controlador = new Controlador(idVoluntarioActual);
         initComponents();
     }
     
     public VistaVoluntario() {
+        this.controlador = new Controlador(idVoluntarioActual);
         initComponents();
     }
     

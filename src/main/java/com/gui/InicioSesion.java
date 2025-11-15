@@ -155,8 +155,8 @@ public class InicioSesion extends javax.swing.JPanel {
     private void ButtonIniciarSesiónInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonIniciarSesiónInicioSesionActionPerformed
         // TODO add your handling code here:
         //mainFrame.setVistaAdministrador();
-        //mainFrame.setVistaVeterinario();
-        mainFrame.setVistaVoluntario();
+        mainFrame.setVistaVeterinario();
+        //mainFrame.setVistaVoluntario();
     }//GEN-LAST:event_ButtonIniciarSesiónInicioSesionActionPerformed
 
     private void ButtonRegistrarNuevoUsuarioInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRegistrarNuevoUsuarioInicioSesionActionPerformed
