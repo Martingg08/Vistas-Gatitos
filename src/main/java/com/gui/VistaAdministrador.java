@@ -1,6 +1,6 @@
 package com.gui;
 
-// Imports de iText (PDF) - Especificar clases exactas
+// Imports de iText (PDF) - Se especifican clases exactas porque en un momento determinado del proyecto hubieron problemas por importar el paquete completo
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -17,7 +17,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-// Imports de AWT - Especificar clases exactas para evitar conflicto con List
+// Imports de AWT - Se especifican clases exactas porque en un momento determinado del proyecto hubieron problemas por importar el paquete completo
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -38,7 +38,7 @@ import java.io.FileOutputStream;
 // Imports de tiempo
 import java.time.LocalDate;
 
-// Import de java.util.List EXPLÍCITAMENTE
+// Import de java.util.List 
 import java.util.ArrayList;
 import java.util.List;
 
@@ -277,7 +277,7 @@ public class VistaAdministrador extends javax.swing.JPanel {
         SwingWorker<Controlador.EstadisticasGatos, Void> worker = new SwingWorker<>() {
             @Override
             protected Controlador.EstadisticasGatos doInBackground() throws Exception {
-                // Simular tiempo de procesamiento
+                // Meramente para simular que carga 
                 Thread.sleep(1500);
                 
                 // TODO: BASE DE DATOS - Obtener estadísticas reales
@@ -524,7 +524,7 @@ public class VistaAdministrador extends javax.swing.JPanel {
                 generarPDF(archivo, stats);
                 
                 JOptionPane.showMessageDialog(this,
-                    "✅ Reporte descargado exitosamente\n\n" +
+                    "Reporte descargado exitosamente\n\n" +
                     "Ubicación: " + archivo.getAbsolutePath(),
                     "Descarga exitosa",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -668,167 +668,167 @@ public class VistaAdministrador extends javax.swing.JPanel {
     // ==================== COMPONENTES GENERADOS POR NETBEANS ====================
 
     @SuppressWarnings("unchecked")
-private void initComponents() {
+    private void initComponents() {
 
-    OpcionesVistaAdministrador = new javax.swing.JPanel();
-    LabelUsuarioAdministrador = new javax.swing.JLabel();
-    BotonGenerarReporte = new javax.swing.JButton();
-    BotonAdministrarUsuarios = new javax.swing.JButton();
-    BotonVerVoluntarios = new javax.swing.JButton(); // ← Debe estar aquí
-    BotonCerrarSesiónAdministrador = new javax.swing.JButton();
-    ContenedorPrincipalAdministrador = new javax.swing.JPanel();
+        OpcionesVistaAdministrador = new javax.swing.JPanel();
+        LabelUsuarioAdministrador = new javax.swing.JLabel();
+        BotonGenerarReporte = new javax.swing.JButton();
+        BotonAdministrarUsuarios = new javax.swing.JButton();
+        BotonVerVoluntarios = new javax.swing.JButton(); // ← Debe estar aquí
+        BotonCerrarSesiónAdministrador = new javax.swing.JButton();
+        ContenedorPrincipalAdministrador = new javax.swing.JPanel();
 
-    setBackground(new java.awt.Color(51, 51, 51));
+        setBackground(new java.awt.Color(51, 51, 51));
 
-    OpcionesVistaAdministrador.setBackground(new java.awt.Color(51, 51, 51));
+        OpcionesVistaAdministrador.setBackground(new java.awt.Color(51, 51, 51));
 
-    LabelUsuarioAdministrador.setFont(new java.awt.Font("Aptos", 0, 24));
-    LabelUsuarioAdministrador.setForeground(new java.awt.Color(255, 255, 255));
-    LabelUsuarioAdministrador.setText("Usuario:");
-    LabelUsuarioAdministrador.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        LabelUsuarioAdministrador.setFont(new java.awt.Font("Aptos", 0, 24));
+        LabelUsuarioAdministrador.setForeground(new java.awt.Color(255, 255, 255));
+        LabelUsuarioAdministrador.setText("Usuario:");
+        LabelUsuarioAdministrador.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-    BotonGenerarReporte.setBackground(new java.awt.Color(0, 102, 153));
-    BotonGenerarReporte.setFont(new java.awt.Font("Aptos", 0, 18));
-    BotonGenerarReporte.setForeground(new java.awt.Color(255, 255, 255));
-    BotonGenerarReporte.setText("Generar reporte");
-    BotonGenerarReporte.setBorderPainted(false);
-    BotonGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            BotonGenerarReporteActionPerformed(evt);
-        }
-    });
+        BotonGenerarReporte.setBackground(new java.awt.Color(0, 102, 153));
+        BotonGenerarReporte.setFont(new java.awt.Font("Aptos", 0, 18));
+        BotonGenerarReporte.setForeground(new java.awt.Color(255, 255, 255));
+        BotonGenerarReporte.setText("Generar reporte");
+        BotonGenerarReporte.setBorderPainted(false);
+        BotonGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonGenerarReporteActionPerformed(evt);
+            }
+        });
 
-    BotonAdministrarUsuarios.setBackground(new java.awt.Color(0, 102, 153));
-    BotonAdministrarUsuarios.setFont(new java.awt.Font("Aptos", 0, 18));
-    BotonAdministrarUsuarios.setForeground(new java.awt.Color(255, 255, 255));
-    BotonAdministrarUsuarios.setText("Administrar usuarios");
-    BotonAdministrarUsuarios.setBorderPainted(false);
-    BotonAdministrarUsuarios.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            BotonAdministrarUsuariosActionPerformed(evt);
-        }
-    });
+        BotonAdministrarUsuarios.setBackground(new java.awt.Color(0, 102, 153));
+        BotonAdministrarUsuarios.setFont(new java.awt.Font("Aptos", 0, 18));
+        BotonAdministrarUsuarios.setForeground(new java.awt.Color(255, 255, 255));
+        BotonAdministrarUsuarios.setText("Administrar usuarios");
+        BotonAdministrarUsuarios.setBorderPainted(false);
+        BotonAdministrarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAdministrarUsuariosActionPerformed(evt);
+            }
+        });
 
-    BotonVerVoluntarios.setBackground(new java.awt.Color(0, 102, 153));
-    BotonVerVoluntarios.setFont(new java.awt.Font("Aptos", 0, 18));
-    BotonVerVoluntarios.setForeground(new java.awt.Color(255, 255, 255));
-    BotonVerVoluntarios.setText("Ver voluntarios");
-    BotonVerVoluntarios.setBorderPainted(false);
-    BotonVerVoluntarios.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            BotonVerVoluntariosActionPerformed(evt);
-        }
-    });
+        BotonVerVoluntarios.setBackground(new java.awt.Color(0, 102, 153));
+        BotonVerVoluntarios.setFont(new java.awt.Font("Aptos", 0, 18));
+        BotonVerVoluntarios.setForeground(new java.awt.Color(255, 255, 255));
+        BotonVerVoluntarios.setText("Ver voluntarios");
+        BotonVerVoluntarios.setBorderPainted(false);
+        BotonVerVoluntarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonVerVoluntariosActionPerformed(evt);
+            }
+        });
 
-    BotonCerrarSesiónAdministrador.setBackground(new java.awt.Color(0, 102, 153));
-    BotonCerrarSesiónAdministrador.setFont(new java.awt.Font("Aptos", 0, 14));
-    BotonCerrarSesiónAdministrador.setForeground(new java.awt.Color(255, 255, 255));
-    BotonCerrarSesiónAdministrador.setText("Cerrar Sesión");
-    BotonCerrarSesiónAdministrador.setBorderPainted(false);
-    BotonCerrarSesiónAdministrador.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            BotonCerrarSesiónAdministradorActionPerformed(evt);
-        }
-    });
+        BotonCerrarSesiónAdministrador.setBackground(new java.awt.Color(0, 102, 153));
+        BotonCerrarSesiónAdministrador.setFont(new java.awt.Font("Aptos", 0, 14));
+        BotonCerrarSesiónAdministrador.setForeground(new java.awt.Color(255, 255, 255));
+        BotonCerrarSesiónAdministrador.setText("Cerrar Sesión");
+        BotonCerrarSesiónAdministrador.setBorderPainted(false);
+        BotonCerrarSesiónAdministrador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonCerrarSesiónAdministradorActionPerformed(evt);
+            }
+        });
 
-    javax.swing.GroupLayout OpcionesVistaAdministradorLayout = new javax.swing.GroupLayout(OpcionesVistaAdministrador);
-    OpcionesVistaAdministrador.setLayout(OpcionesVistaAdministradorLayout);
-    OpcionesVistaAdministradorLayout.setHorizontalGroup(
-        OpcionesVistaAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(OpcionesVistaAdministradorLayout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(OpcionesVistaAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(LabelUsuarioAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(OpcionesVistaAdministradorLayout.createSequentialGroup()
-                    .addGap(30, 30, 30)
-                    .addGroup(OpcionesVistaAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(BotonCerrarSesiónAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BotonVerVoluntarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BotonAdministrarUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BotonGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(30, 30, 30)))
-            .addContainerGap())
-    );
-    OpcionesVistaAdministradorLayout.setVerticalGroup(
-        OpcionesVistaAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(OpcionesVistaAdministradorLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(LabelUsuarioAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(200, 200, 200)
-            .addComponent(BotonGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(50, 50, 50)
-            .addComponent(BotonAdministrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(50, 50, 50)
-            .addComponent(BotonVerVoluntarios, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
-            .addComponent(BotonCerrarSesiónAdministrador)
-            .addGap(50, 50, 50))
-    );
+        javax.swing.GroupLayout OpcionesVistaAdministradorLayout = new javax.swing.GroupLayout(OpcionesVistaAdministrador);
+        OpcionesVistaAdministrador.setLayout(OpcionesVistaAdministradorLayout);
+        OpcionesVistaAdministradorLayout.setHorizontalGroup(
+            OpcionesVistaAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OpcionesVistaAdministradorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(OpcionesVistaAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LabelUsuarioAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(OpcionesVistaAdministradorLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(OpcionesVistaAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(BotonCerrarSesiónAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BotonVerVoluntarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BotonAdministrarUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BotonGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)))
+                .addContainerGap())
+        );
+        OpcionesVistaAdministradorLayout.setVerticalGroup(
+            OpcionesVistaAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OpcionesVistaAdministradorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(LabelUsuarioAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(200, 200, 200)
+                .addComponent(BotonGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(BotonAdministrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(BotonVerVoluntarios, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
+                .addComponent(BotonCerrarSesiónAdministrador)
+                .addGap(50, 50, 50))
+        );
 
-    ContenedorPrincipalAdministrador.setBackground(new java.awt.Color(102, 102, 102));
+        ContenedorPrincipalAdministrador.setBackground(new java.awt.Color(102, 102, 102));
 
-    javax.swing.GroupLayout ContenedorPrincipalAdministradorLayout = new javax.swing.GroupLayout(ContenedorPrincipalAdministrador);
-    ContenedorPrincipalAdministrador.setLayout(ContenedorPrincipalAdministradorLayout);
-    ContenedorPrincipalAdministradorLayout.setHorizontalGroup(
-        ContenedorPrincipalAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 922, Short.MAX_VALUE)
-    );
-    ContenedorPrincipalAdministradorLayout.setVerticalGroup(
-        ContenedorPrincipalAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 0, Short.MAX_VALUE)
-    );
+        javax.swing.GroupLayout ContenedorPrincipalAdministradorLayout = new javax.swing.GroupLayout(ContenedorPrincipalAdministrador);
+        ContenedorPrincipalAdministrador.setLayout(ContenedorPrincipalAdministradorLayout);
+        ContenedorPrincipalAdministradorLayout.setHorizontalGroup(
+            ContenedorPrincipalAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 922, Short.MAX_VALUE)
+        );
+        ContenedorPrincipalAdministradorLayout.setVerticalGroup(
+            ContenedorPrincipalAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-    this.setLayout(layout);
-    layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
-            .addComponent(OpcionesVistaAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(ContenedorPrincipalAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-    );
-    layout.setVerticalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(OpcionesVistaAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(ContenedorPrincipalAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-    );
-}
-    
-    // ==================== MÓDULO: ADMINISTRAR USUARIOS ====================
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(OpcionesVistaAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ContenedorPrincipalAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(OpcionesVistaAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ContenedorPrincipalAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+    }
 
-/**
- * Muestra la vista de administración de usuarios con tabla y opciones
- */
-private void mostrarAdministracionUsuarios() {
-    JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
-    panelPrincipal.setBackground(new Color(102, 102, 102));
-    panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-    
-    // Título
-    JLabel labelTitulo = new JLabel("Administración de Usuarios");
-    labelTitulo.setFont(new java.awt.Font("Aptos", java.awt.Font.BOLD, 32));
-    labelTitulo.setForeground(Color.WHITE);
-    labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-    panelPrincipal.add(labelTitulo, BorderLayout.NORTH);
-    
-    // Panel central con tabla
-    JPanel panelCentral = crearPanelTablaUsuarios();
-    panelPrincipal.add(panelCentral, BorderLayout.CENTER);
-    
-    // Mostrar en el contenedor principal
-    ContenedorPrincipalAdministrador.removeAll();
-    ContenedorPrincipalAdministrador.setLayout(new BorderLayout());
-    
-    JScrollPane scrollPane = new JScrollPane(panelPrincipal);
-    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-    scrollPane.setBorder(null);
-    
-    ContenedorPrincipalAdministrador.add(scrollPane, BorderLayout.CENTER);
-    ContenedorPrincipalAdministrador.revalidate();
-    ContenedorPrincipalAdministrador.repaint();
-}
+        // ==================== MÓDULO: ADMINISTRAR USUARIOS ====================
+
+    /**
+     * Muestra la vista de administración de usuarios con tabla y opciones
+     */
+    private void mostrarAdministracionUsuarios() {
+        JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
+        panelPrincipal.setBackground(new Color(102, 102, 102));
+        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        // Título
+        JLabel labelTitulo = new JLabel("Administración de Usuarios");
+        labelTitulo.setFont(new java.awt.Font("Aptos", java.awt.Font.BOLD, 32));
+        labelTitulo.setForeground(Color.WHITE);
+        labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        panelPrincipal.add(labelTitulo, BorderLayout.NORTH);
+
+        // Panel central con tabla
+        JPanel panelCentral = crearPanelTablaUsuarios();
+        panelPrincipal.add(panelCentral, BorderLayout.CENTER);
+
+        // Mostrar en el contenedor principal
+        ContenedorPrincipalAdministrador.removeAll();
+        ContenedorPrincipalAdministrador.setLayout(new BorderLayout());
+
+        JScrollPane scrollPane = new JScrollPane(panelPrincipal);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.setBorder(null);
+
+        ContenedorPrincipalAdministrador.add(scrollPane, BorderLayout.CENTER);
+        ContenedorPrincipalAdministrador.revalidate();
+        ContenedorPrincipalAdministrador.repaint();
+    }
 
     /**
      * Crea el panel con la tabla de usuarios y botones de acción
